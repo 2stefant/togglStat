@@ -1,5 +1,5 @@
 # togglStat
--Time reporting statistics web site interacting with Toggl.com.
+- Time reporting statistics web site interacting with Toggl.com.
 
  - Extends free version with weekly and monthly reports.
 
