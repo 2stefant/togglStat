@@ -1,0 +1,34 @@
+# Install curl in VS Code
+https://www.vulongtran.com/how-to-use-visual-studio-to-run-curl-commands
+
+#api-token, replace <TOKEN> below:
+
+# Toggl - Get info about me
+curl -v -u TOKEN:api_token -X GET https://api.track.toggl.com/api/v8/me
+# => gives workspaceid "dev-ws": 4841928
+
+# Get workspaces
+curl -v -u TOKEN:api_token \
+-X GET https://api.track.toggl.com/api/v8/workspaces
+# => gives workspaceid "dev-ws": 4841928
+
+# Get workspace projects
+curl -v -u TOKEN:api_token \
+-X GET https://api.track.toggl.com/api/v8/workspaces/4841928/projects
+# => gives project "togglStat": 164966905
+
+# Get project summary data
+curl -v -u TOKEN:api_token \
+	-X GET https://api.track.toggl.com/api/v8/projects/164966905
+
+# Get weekly report
+curl -v -u TOKEN:api_token \ 
+    -X GET https://api.track.toggl.com/reports/api/v2/weekly?workspace_id=4841928&since=2020-11-01&until=2020-12-01&user_agent=apilab
+
+
+curl -v -u TOKEN:api_token \ 
+    -X GET https://api.track.toggl.com/reports/api/v2/summary?workspace_id=4841928&since=2020-01-01&until=2020-11-08&user_agent=api_test
+
+curl -u TOKEN:api_token \ 
+    -X GET https://api.track.toggl.com/reports/api/v2/project/?page=1&user_agent=stefan.lindepil@gmail.com&workspace_id=4841928&project_id=164966905
+

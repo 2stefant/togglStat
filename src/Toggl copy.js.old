@@ -1,0 +1,135 @@
+import jQuery from 'jquery';
+
+const WeekList = (props) => {
+
+    // Tweak our main app details variable, adding a "user_agent" string
+    // A "user_agent" is a Toggl API requirement
+    var appDetails = {
+        togglAPIKey: 'TOKEN',
+        togglWorkspaceID: '4841928',
+        user_agent: 'togglStat_stefan.lindepil@gmail.com'
+    };
+
+    /**
+        * Retrieves data from the Toggl API
+        * @param {String} dataUrl (URL to retrieve)
+        * @return {Object} data (Returned Data)
+        */
+    function retrieveTogglData(dataUrl) {
+        // Create Base64 Encoded "Basic" Authorization string
+        var authStr = 'Basic ' + window.btoa(window.appDetails.togglAPIKey + ':api_token');
+        // Create Authorization header
+        var requestHeaders = { 'Authorization': authStr };
+        // Create parameter object, passing our required parameters
+        var dataObj = {
+            user_agent: window.appDetails.user_agent,
+            workspace_id: window.appDetails.togglWorkspaceID
+        };
+        // jQuery AJAX GET request, including Authorization headers
+        jQuery.ajax({
+            url: dataUrl,
+            data: dataObj,
+            headers: requestHeaders,
+            success: function (data) {
+                // Successful GET request
+                // Return the data
+                return data;
+            }
+        }).fail(function (errorData) {// Failure to retrieve data// Show error alert
+            alert('Error retrieving data from the Toggl API!' + "\r\n" + 'Error Code:' + errorData.statusText);// Return false
+            return false;
+        });
+    }
+
+    function toggl() {
+        // retrieveTogglData('https://toggl.com/reports/api/v2/details?since=2014-06-14&until=2014-06-21',function(data){
+        //-X GET https://api.track.toggl.com/api/v8/workspaces/4841928/projects
+
+        jQuery(document).ready(function () {// Initialise the retrieval of data:
+            // Specifying the URL for the Weekly Data Report
+            // ... and a callback function which outputs the data returned into the console
+            retrieveTogglData('https://toggl.com/reports/api/v2/weekly',
+                function (data) {// output the data returned into the debug console
+                    console.log('Data Returned:', data);// Alert total ms recorded this week
+                    //alert('Total milliseconds recorded this week: ' + data.total_grand);
+                });
+        });
+    }
+
+    /**
+ * Retrieves data from the Toggle API
+ * @param  {String} project   project id to retrieve
+ * @param  {String} thisClass class of container to hold returned data
+ */
+    function callTogglData(project, thisClass) {
+        var xmlhttp;
+        var url = 'https://toggl.com/reports/api/v2/weekly?workspace_id=[Your Workspace ID]]&user_agent=[Your User ID]&project_ids=' + project;
+        // compatible with IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                myData = xmlhttp.responseText;
+                thisData = JSON.parse(myData);
+                duration = thisData.total_grand;
+                var seconds = parseInt((duration / 1000) % 60),
+                    minutes = parseInt((duration / (1000 * 60)) % 60),
+                    hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+
+                hours = (hours < 10) ? "0" + hours : hours;
+                minutes = (minutes < 10) ? "0" + minutes : minutes;
+                seconds = (seconds < 10) ? "0" + seconds : seconds;
+                content = '<h3>' + thisData.data[0].title.project + '</h3> <p>Total time recorded this week: ' + hours + ':' + minutes + ':' + seconds + '</p>';
+                document.getElementsByClassName(thisClass)[0].innerHTML = content;
+            }
+        }
+        myKey = 'Basic ' + window.btoa('[Your API Key]' + ':api_token');
+        xmlhttp.open("GET", url, true);
+        xmlhttp.setRequestHeader('Authorization', myKey);
+        xmlhttp.send();
+
+    }
+
+    /**
+ * Retrieves data from the Toggle API
+ * @param  {String} project   project id to retrieve
+ * @param  {String} thisClass class of container to hold returned data
+ * Usage: callTogglData('projectID','.yourClass');
+ */
+function callTogglData_Jquery(project, thisClass){
+	var myKey, dataContainer, requestHeaders;
+ 	myKey = 'Basic ' + window.btoa('[Your API Key]' + ':api_token');
+ 	dataContainer = $(thisClass);
+    	requestHeaders = { 'Authorization' : myKey };
+	$.ajax({
+	    url: 'https://toggl.com/reports/api/v2/weekly',
+	    data: {user_agent: '[YourUserID_youremail@example.com]', workspace_id: '[Your Workspace ID]', project_ids: project},
+	    headers: requestHeaders,
+	    success: function(data){
+	    	var duration, seconds, minutes, hours;
+	        duration = data.total_grand;
+	        seconds = parseInt((duration/1000)%60),
+		    minutes = parseInt((duration/(1000*60))%60),
+		    hours = parseInt((duration/(1000*60*60))%24);
+
+	        hours = (hours < 10) ? "0" + hours : hours;
+	        minutes = (minutes < 10) ? "0" + minutes : minutes;
+	        seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+	        dataContainer.append('<h3>' + data.data[0].title.project + '</h3><p>Total time recorded this week: ' + hours + ':' + minutes + ':' + seconds + '</p>');
+	    }
+	});
+}
+
+    return (
+        <div className="WeekList">
+            <h3>WeekList</h3>
+            <button name="toggl" onClick={toggl()}>Toggl</button>
+        </div>
+    );
+};
+
+export default WeekList;
+
+
+
