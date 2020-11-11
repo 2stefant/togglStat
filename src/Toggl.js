@@ -1,12 +1,12 @@
-const WeekList = (props) => {
+const Hack = (props) => {
 
     // Tweak our main app details variable, adding a "user_agent" string
     // A "user_agent" is a Toggl API requirement
     var appDetails = {
         togglApiKey: 'TOKEN',
-        togglWorkspaceId: '4841928',
-        user_agent: 'togglStat_stefan.lindepil@gmail.com',
-        projectId: '164966905'
+        togglWorkspaceId: 'XX',
+        user_agent: 'togglStat_XX@gmail.com',
+        projectId: 'XX'
     };
 
 
@@ -86,14 +86,14 @@ const WeekList = (props) => {
 
 
     return (
-        <div className="WeekList">
-            <h3>WeekList</h3>
+        <div className="Hack">
+            <h3>Hack</h3>
             <button name="toggl" onClick={() => toggl()}>Toggl</button>
         </div>
     );
 };
 
-export default WeekList;
+export default Hack;
 
 
 
