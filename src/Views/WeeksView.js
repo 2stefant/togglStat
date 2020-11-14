@@ -3,14 +3,14 @@ import ListComponent from '../Components/ListComponent'
 import moment from 'moment';
 // import { useHistory } from "react-router-dom";
 
-function WeeksView() {
+function WeeksView(props) {
 
     // const history = useHistory();
 
     const tableHeaderWeekDays = moment.weekdaysShort().map(day => {
         return (
           <th key={day} className="week-day">
-           {day}
+            {day}
           </th>
         );
      });
@@ -27,7 +27,9 @@ function WeeksView() {
             <button name="months" onClick={navigateMonthsView}>Months</button>
             <table>
                 <thead>
-                    {tableHeaderWeekDays}
+                    <tr>
+                        {tableHeaderWeekDays}
+                    </tr>
                 </thead>
             </table>
         </div>);

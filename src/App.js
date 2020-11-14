@@ -46,17 +46,20 @@ class App extends React.Component {
     return moment(new Date()).week();
   }
 
-  handleTogglConnect(togglConfig){
+  handleTogglConnect(conn){
     console.log("=== handleTogglConnect");
+    console.log(conn);
     
+    let _=conn.togglConfig;
     //Update main state.
     this.setState({
       togglConfig:{
-          apiKey: togglConfig.apiKey,
-          workspaceId: togglConfig.workspaceId,
-          userAgent: togglConfig.userAgent,
-          projectId: togglConfig.projectId,
-      }
+          apiKey: _.apiKey,
+          workspaceId: _.workspaceId,
+          userAgent: _.userAgent,
+          projectId: _.projectId,
+      },
+      workspaceName: conn.workspaceName
     });
   }
 
@@ -81,8 +84,12 @@ class App extends React.Component {
             <Route path="/connect" render={
               props => (<TogglConnectForm config={this.state.togglConfig} onConnect={this.handleTogglConnect} />)
             } />
-            <Route path="/weeks" component={WeeksView} />
-            <Route path="/months" component={MonthsView} />
+            <Route path="/weeks" render={
+              props => (<WeeksView config={this.state.togglConfig} />)
+            } />
+            <Route path="/months" render={
+              props => (<MonthsView config={this.state.togglConfig} />)
+            } />
             <Route path="/about" component={AboutView} />
             {/* <Route path="/overview" component={TogglOverview} /> */}
             </Switch>

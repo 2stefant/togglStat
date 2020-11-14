@@ -2,7 +2,8 @@ import React from 'react';
 
 /*
 Demonstractes the following React concepts:
- - Basic class component using state.
+ - Basic class component using local state.
+ - Event propagation up to parent.
  - React form with submit logic.
  - Api interaction verus Toggl.com.
  - Error handling. TODO
@@ -75,7 +76,7 @@ class TogglConnectForm extends React.Component {
 
                 /* Only propagate connection info up to parent
                 if successfully retrieved the workspace. */
-                self.props.onConnect(self.state.togglConfig);
+                self.props.onConnect(self.state);
             }
         });
     }
@@ -100,7 +101,7 @@ class TogglConnectForm extends React.Component {
                 {this.createInputField("UserAgent", "userAgent", config.userAgent)}
                 <input type="submit" value="Submit" />
             </form>
-            <label>{(ws) ? `Connected to workspace ws: '${ws}'`: "Not connected"}</label>
+            <label>{(ws) ? `Connected to workspace: '${ws}'`: "Not connected"}</label>
             </>
         );
     };

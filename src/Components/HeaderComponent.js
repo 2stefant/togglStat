@@ -6,12 +6,15 @@ function HeaderComponent() {
     return (
         <table>
             <thead>
-                <tr><td colSpan="1"></td></tr>
-                <tr><td colSpan="2"></td></tr>
+                <tr>
+                    <th colSpan="1"></th>
+                    <th colSpan="2"></th>
+                </tr>
             </thead>
             <tbody>
                 <tr>
                     <td><h2>togglStat</h2></td>
+                    <td><h2>x</h2></td>
                     {/* <td><AppStateComponent /></td> */}
                 </tr>
             </tbody>

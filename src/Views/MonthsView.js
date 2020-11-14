@@ -7,7 +7,7 @@ Demonstractes the following React concepts:
  - Arrow function component.
  - React hooks for state.
  */
-const MonthsView = () => {
+const MonthsView = (props) => {
 
     const [value, onChange] = useState(new Date());
 
