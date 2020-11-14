@@ -1,12 +1,6 @@
 import React from 'react';
-import NavigationComponent from './NavigationComponent';
-import UserInfoComponent from './UserInfoComponent';
-import ProjectInfoComponent from './ProjectInfoComponent';
-import WeeksView from './WeeksView';
-import MonthsView from './MonthsView';
-import TogglConnectForm from './TogglConnectForm';
-
-import moment from 'moment';
+import UserInfoComponent from '../Components/UserInfoComponent';
+import ProjectInfoComponent from '../Components/ProjectInfoComponent';
 
 /*
 Demonstractes the following React concepts:
@@ -20,10 +14,10 @@ class TogglOverview extends React.Component{
         super(props);
         this.state = {
           togglConfig:{
-            apiKey: 'TOKEN',
-            workspaceId: 'X',
+            apiKey: '',
+            workspaceId: '4841928',
             user_agent: 'togglStat_stefan.lindepil@gmail.com',
-            projectId: 'XX'
+            projectId: '164966905'
           },
           workspaceName:null,
           userInfo: null,
@@ -34,39 +28,9 @@ class TogglOverview extends React.Component{
           currentWeek: this.showCurrentWeek(),
         };
     }
-
-    showCurrentYear() {
-        return new Date().getFullYear();
-    }
-
-    showCurrentMonth() {
-        return new Date().getMonth();
-    }
-
-    showCurrentWeek() {
-        return moment(new Date()).week();
-    }
-
-    render(){
-        return (
-            <div className="TogglOverview">
-                <TogglConnectForm />
-                <h1>Toggle Overview</h1>
-                <button name="getTogglSummary" onClick={() => this.getSummary()}>Toggl</button>
-                <NavigationComponent />
-                <UserInfoComponent userInfo={this.state.userInfo} workspaceName={this.state.workspaceName}/>
-                <ProjectInfoComponent projectInfo={this.state.projectInfo} 
-                    projectSummary={this.state.projectSummary} />
-                <WeeksView />
-                <MonthsView />
-            </div>
-        );
-    };
   
     getSummary(){
-
         let config=this.state.togglConfig;
-
         var toggl=this.connectWithToggl(config);
 
         this.getWorkSpaceInfo(toggl, config.workspaceId);
@@ -93,7 +57,6 @@ class TogglOverview extends React.Component{
     }
 
     getWorkSpaceInfo(toggl, workspaceId) {
-
         let self=this;
 
         toggl.getWorkspaces(function (err, workspaces) {
@@ -114,11 +77,9 @@ class TogglOverview extends React.Component{
                 self.setState({workspaceName: ws.name})
             }
         });
-
     }
 
     getUserInfo(toggl) {
-
         let self=this;
 
         toggl.getUserData({}, function(err, userData) {
@@ -126,11 +87,9 @@ class TogglOverview extends React.Component{
             console.log(userData);
             self.setState({userInfo: userData});
         });
-
     }
 
     getProjectInfo(toggl, projectId) {
-
         let self=this;
 
         toggl.getProjectData(projectId, function(err, projData) {
@@ -141,7 +100,6 @@ class TogglOverview extends React.Component{
     }
 
     getProjectSummary(toggl, opts) {
-
         let self=this;
 
         toggl.summaryReport(opts, function (err, report) {
@@ -152,13 +110,10 @@ class TogglOverview extends React.Component{
             console.log("client:" + report.data[0].title.client);
 
             self.setState({projectSummary: report});
-
         });
-
     }
 
     getReportDetails(toggl, opts, projectId) {
-
         toggl.detailedReport(opts, function (err, report) {
             console.log("DETAILED ==== ");
             console.log(report);
@@ -191,9 +146,19 @@ class TogglOverview extends React.Component{
 
         });
     }
-  
-};
 
+    render(){
+        return (
+            <div className="TogglOverview">
+                <h3>Toggle Overview</h3>
+                <button name="getTogglSummary" onClick={() => this.getSummary()}>Toggl</button>
+                <UserInfoComponent userInfo={this.state.userInfo} workspaceName={this.state.workspaceName}/>
+                <ProjectInfoComponent projectInfo={this.state.projectInfo} 
+                    projectSummary={this.state.projectSummary} />
+            </div>
+        );
+    }
+};
 export default TogglOverview;
 
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
-import ListComponent from './ListComponent'
+import ListComponent from '../Components/ListComponent'
 
 /*
 Demonstractes the following React concepts:

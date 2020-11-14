@@ -11,10 +11,10 @@ class TogglConnectForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            apiKey: 'TOKEN',
-            workspaceId: 'xx',
-            userAgent: 'togglStat_xx@gmail.com',
-            projectId: 'xx',
+            apiKey: '',
+            workspaceId: '4841928',
+            userAgent: 'togglStat_stefan.lindepil@gmail.com',
+            projectId: '164966905',
             workspaceName: null
         };
 

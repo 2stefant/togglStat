@@ -1,5 +1,5 @@
 import React from 'react';
-import ListComponent from './ListComponent'
+import ListComponent from '../Components/ListComponent'
 import moment from 'moment';
 // import { useHistory } from "react-router-dom";
 
