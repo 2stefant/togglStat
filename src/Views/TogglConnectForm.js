@@ -10,42 +10,41 @@ Demonstractes the following React concepts:
 class TogglConnectForm extends React.Component {
     constructor(props) {
         super(props);
+
+        let config=props.config;
+
         this.state = {
-            apiKey: '',
-            workspaceId: '4841928',
-            userAgent: 'togglStat_stefan.lindepil@gmail.com',
-            projectId: '164966905',
+            togglConfig: {
+                apiKey: config.apiKey,
+                workspaceId: config.workspaceId,
+                userAgent: config.userAgent,
+                projectId: config.projectId,
+            },
             workspaceName: null
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    // handleChange(event) {
-    //     event.preventDefault();
-    //     if(event.target.id){
-    //         console.log(`id:${event.target.id}, value:${event.target.value}`);
-    //         this.setState({[event.target.id]: event.target.value});
-    //     }
-    // }
-
     handleSubmit(event) {
         event.preventDefault();
         
         const inputs = event.target.getElementsByTagName("input");
 
+        //Update the local state of the component.
         this.setState({
-            apiKey: inputs.apiKey.value,
-            workspaceId: inputs.workspaceId.value,
-            userAgent: inputs.userAgent.value,
-            projectId: inputs.projectId.value,
+            togglConfig:{
+                apiKey: inputs.apiKey.value,
+                workspaceId: inputs.workspaceId.value,
+                userAgent: inputs.userAgent.value,
+                projectId: inputs.projectId.value,
+            },
             workspaceName: null
         });
 
-        var TogglClient = require('toggl-api');
-        var toggl = new TogglClient({ apiToken: this.state.apiKey });
-
-        this.getWorkSpaceInfo(toggl, this.state.workspaceId);
+        var TogglClient = require("toggl-api");
+        var toggl = new TogglClient({ apiToken: inputs.apiKey.value });
+        this.getWorkSpaceInfo(toggl, inputs.workspaceId.value);
     }
 
     getWorkSpaceInfo(toggl, workspaceId) {
@@ -54,6 +53,11 @@ class TogglConnectForm extends React.Component {
 
         toggl.getWorkspaces(function (err, workspaces) {
             console.log("WORKSPACES ==== ");
+
+            if(!workspaces){
+                console.log("Could not connect");
+                return;
+            }
 
             var ws = null
             for (let index = 0; index < workspaces.length; index++) {
@@ -68,29 +72,36 @@ class TogglConnectForm extends React.Component {
                 console.log(ws);
 
                 self.setState({ workspaceName: ws.name });
+
+                /* Only propagate connection info up to parent
+                if successfully retrieved the workspace. */
+                self.props.onConnect(self.state.togglConfig);
             }
         });
-
     }
 
     createInputField = (name, id, value) => {
         return <div>
             <label>{name}:
-                {/* <input id={id} type="text" value={value} onChange={this.handleChange} /> */}
-                <input name={id} type="text" value={value} />
+                <input name={id} type="text" defaultValue={value} />
             </label>
         </div>;
     }
 
     render() {
+        let config=this.state.togglConfig;
+        let ws=this.state.workspaceName;
         return (
+            <>
             <form onSubmit={this.handleSubmit}>
-                {this.createInputField("ApiKey", "apiKey", this.state.apiKey)}
-                {this.createInputField("WorkspaceId", "workspaceId", this.state.workspaceId)}
-                {this.createInputField("ProjectId", "projectId", this.state.projectId)}
-                {this.createInputField("UserAgent", "userAgent", this.state.userAgent)}
+                {this.createInputField("ApiKey", "apiKey", config.apiKey)}
+                {this.createInputField("WorkspaceId", "workspaceId", config.workspaceId)}
+                {this.createInputField("ProjectId", "projectId", config.projectId)}
+                {this.createInputField("UserAgent", "userAgent", config.userAgent)}
                 <input type="submit" value="Submit" />
             </form>
+            <label>{(ws) ? `Connected to workspace ws: '${ws}'`: "Not connected"}</label>
+            </>
         );
     };
 };
