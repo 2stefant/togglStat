@@ -4,12 +4,12 @@ import {ConnectionStatusContext} from '../Services/ConnectionStatusContext';
 
 class ConnectionStatusComponent extends React.Component {
   render() {
-    let props = this.props;
-    let ctx = this.context;
+    let status = this.context.status;
     
     return (
-      <label {...props} style={{backgroundColor: ctx.background}}>
-          {ctx.isConnected ? "Connected": "Not connected"}
+      <label style={{backgroundColor: status.background}}>
+          {status.isConnected ? "Connected": "Not connected"}
+          <br/>
       </label>
     );
   }

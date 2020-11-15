@@ -11,9 +11,10 @@ export const connectionStatus={
     }
 };
 
-
-// Context lets us pass a value deep into the component tree
+// The context can pass value down in the component tree
 // without explicitly threading it through every component.
-// Create a context for the current settings.
-export const ConnectionStatusContext = React.createContext(
-    connectionStatus.notConnected);
+//The consumer callback enables updating context from nested component.
+export const ConnectionStatusContext = React.createContext({
+    status: connectionStatus.notConnected,
+    consumerCallback:  () => {}
+});

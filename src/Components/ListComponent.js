@@ -7,9 +7,13 @@ function ListComponent(props) {
         return <li key={key}>{item.name}</li>;
     });
 
+    const title=(!props.hideTitle || props.hideTitle===false) 
+        ? <h2>{props.title}</h2>
+        : <></>;
+
     return (
         <div className="ListComponent">
-            <h2>{props.title}</h2>
+            {title}
             <ul>{items}</ul>
         </div>
     );

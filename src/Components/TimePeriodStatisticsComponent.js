@@ -6,7 +6,6 @@ class TimePeriodStatisticsComponent extends React.Component {
     }
 
     render() {
-
         const inlineStyle={
             backgroundColor: "DodgerBlue",  
             color: "#74e4ec",

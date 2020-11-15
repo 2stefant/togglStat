@@ -31,10 +31,11 @@ class App extends React.Component {
       currentYear: this.showCurrentYear(),
       currentMonth: this.showCurrentMonth(),
       currentWeek: this.showCurrentWeek(),
-      connection: connectionStatus.notConnected,
+      connection: {
+        status: connectionStatus.notConnected,
+        consumerCallback: this.handleConnectionCallback
+      }
     };
-
-    this.handleTogglConnect=this.handleTogglConnect.bind(this);
   }
 
   showCurrentYear() {
@@ -49,7 +50,19 @@ class App extends React.Component {
     return moment(new Date()).week();
   }
 
-  handleTogglConnect(conn){
+  handleConnectionCallback = (newStatus) => {
+    console.log("=== handleConnectionCallback");
+    console.log(newStatus);
+    
+    this.setState({
+      connection: {
+        status: newStatus,
+        consumerCallback: this.handleConnectionCallback
+      }
+    });
+  }
+
+  handleTogglConnect = (conn) => {
     console.log("=== handleTogglConnect");
     console.log(conn);
     
@@ -64,17 +77,19 @@ class App extends React.Component {
           projectId: _.projectId,
       },
       workspaceName: conn.workspaceName,
-      connection: connectionStatus.connected
+      connection: {
+        status: connectionStatus.connected,
+        consumerCallback: this.handleConnectionCallback
+      }
     });
   }
 
   render() {
     return (
       <>
+        <ConnectionStatusContext.Provider value={this.state.connection}>
           <Router>
-            <ConnectionStatusContext.Provider value={this.state.connection}>
               <HeaderComponent />
-            </ConnectionStatusContext.Provider>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
               <ul className="navbar-nav mr-auto">
                 <li><Link to={"/"} className="nav-link">Home</Link></li>
@@ -101,6 +116,7 @@ class App extends React.Component {
               {/* <Route path="/overview" component={TogglOverview} /> */}
               </Switch>
           </Router>
+      </ConnectionStatusContext.Provider>
       </>
     );
   }
