@@ -1,5 +1,5 @@
 import React from 'react';
-// import AppStateComponent from './AppStateComponent';
+import ConnectionStatusComponent from './ConnectionStatusComponent';
 
 function HeaderComponent() {
 
@@ -14,7 +14,7 @@ function HeaderComponent() {
             <tbody>
                 <tr>
                     <td><h2>togglStat</h2></td>
-                    <td><h2>x</h2></td>
+                    <td><ConnectionStatusComponent/></td>
                     {/* <td><AppStateComponent /></td> */}
                 </tr>
             </tbody>
