@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import moment from 'moment';
 
-import "./App.css";
+//import "./App.css"; //TODO remove content inside css file.
+import {ConnectionStatusContext, connectionStatus} from './Services/ConnectionStatusContext';
 
 import HeaderComponent from "./Components/HeaderComponent";
-import {ConnectionStatusContext, connectionStatus} from './Services/ConnectionStatusContext';
 
 import HomeView from "./Views/HomeView";
 import TogglConnectForm from "./Views/TogglConnectForm";
@@ -13,7 +13,6 @@ import TogglOverview from "./Views/TogglOverview";
 import WeeksView from "./Views/WeeksView";
 import MonthsView from "./Views/MonthsView";
 import AboutView from "./Views/AboutView";
-
 
 class App extends React.Component {
   constructor(props) {

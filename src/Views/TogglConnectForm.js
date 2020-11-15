@@ -21,7 +21,8 @@ class TogglConnectForm extends React.Component {
                 userAgent: config.userAgent,
                 projectId: config.projectId,
             },
-            workspaceName: null
+            workspaceName: null,
+            connectionError: null
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -52,11 +53,21 @@ class TogglConnectForm extends React.Component {
 
         let self = this;
 
+        self.setState({ 
+            workspaceName: null,
+            connectionError: null 
+        });
+
         toggl.getWorkspaces(function (err, workspaces) {
             console.log("WORKSPACES ==== ");
 
             if(!workspaces){
+                self.setState({ 
+                    workspaceName: null,
+                    connectionError: err 
+                });
                 console.log("Could not connect");
+                console.log(err);
                 return;
             }
 
@@ -72,7 +83,10 @@ class TogglConnectForm extends React.Component {
                 console.log("workspace id:" + workspaceId);
                 console.log(ws);
 
-                self.setState({ workspaceName: ws.name });
+                self.setState({ 
+                    workspaceName: ws.name,
+                    connectionError: err 
+                });
 
                 /* Only propagate connection info up to parent
                 if successfully retrieved the workspace. */
@@ -92,6 +106,7 @@ class TogglConnectForm extends React.Component {
     render() {
         let config=this.state.togglConfig;
         let ws=this.state.workspaceName;
+        let err=this.state.connectionError;
         return (
             <>
             <form onSubmit={this.handleSubmit}>
@@ -99,14 +114,15 @@ class TogglConnectForm extends React.Component {
                 {this.createInputField("WorkspaceId", "workspaceId", config.workspaceId)}
                 {this.createInputField("ProjectId", "projectId", config.projectId)}
                 {this.createInputField("UserAgent", "userAgent", config.userAgent)}
-                <input type="submit" value="Submit" />
+                <input type="submit" value="Connect" />
             </form>
-            <label>{(ws) ? `Connected to workspace: '${ws}'`: "Not connected"}</label>
+            <label>{(ws) ? `Connected to workspace: '${ws}'`: null}</label>
+            <label>{(err) ? JSON.stringify(err) : null}</label>
             </>
         );
     };
 };
 export default TogglConnectForm;
 
-
+//TODO read https://goshakkk.name/submit-time-validation-react/
 

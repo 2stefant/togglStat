@@ -18,11 +18,11 @@ class TimePeriodStatisticsComponent extends React.Component {
             <div className="TimePeriodStatisticsComponent">
                 <fieldset>
                     <legend style={inlineStyle}>Reported Time Statistics</legend>
-                    <label for="week">Week</label><br/>
-                    <label for="month">Month</label><br/>
-                    <label for="quarter">Quarter</label><br/>
-                    <label for="midYear">MidYear</label><br/>
-                    <label for="year">Year</label><br/>
+                    <label name="week">Week</label><br/>
+                    <label name="month">Month</label><br/>
+                    <label name="quarter">Quarter</label><br/>
+                    <label name="midYear">MidYear</label><br/>
+                    <label name="year">Year</label><br/>
                   </fieldset>
             </div>
         );
