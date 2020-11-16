@@ -1,13 +1,19 @@
 import React from 'react';
 
-class AboutView extends React.Component {
-   render() {
-      return (
-         <div>
-            <h2>About</h2>
-            <p>togglStat - Statistics for reported time in Toggl.</p>
-         </div>
-      )
+const AboutView = ({title, description}) =>{
+
+   const jsxContent = (title, description) =>{
+      return <>
+         <label>{title}</label>
+         <p>{description}</p>
+      </>;
    }
+
+   return (
+      <div>
+         <h2>About</h2>
+         {jsxContent(title,description)}         
+      </div>
+   )
 }
 export default AboutView

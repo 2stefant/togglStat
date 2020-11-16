@@ -34,9 +34,14 @@ const TogglHack = () => {
     var TogglClient = require("toggl-api");
     var toggl = new TogglClient({ apiToken: appDetails.togglApiKey });
 
+
     toggl.getWorkspaces(function (err, workspaces) {
       console.log("WORKSPACES ==== ");
       console.log(workspaces);
+
+      if(err){
+        return;
+      }
 
       var items=workspaces.map(item => {
         return {
@@ -132,7 +137,7 @@ const TogglHack = () => {
         <p>You clicked {count} times</p>
         <button onClick={() => {
             setCount(count + 1); 
-            console.log("tjoho");
+            console.log("click counter");
         }}>Click me</button>
       </div>
       <hr />

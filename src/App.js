@@ -115,7 +115,9 @@ class App extends React.Component {
                 props => (<MonthsView config={this.state.togglConfig} />)
               } />
               <Route path="/settings" component={SettingsView} />
-              <Route path="/about" component={AboutView} />
+              <Route path="/about" render={
+                props => <AboutView title="togglStat" description="Statistics for reported time in Toggl." />
+              }/>
               {/* <Route path="/overview" component={TogglOverview} /> */}
               </Switch>
           </Router>
