@@ -1,15 +1,19 @@
-import { useState, useEffect } from "react";
+import React,{ useState, useEffect } from "react";
+import ErrorBoundary from "../Components/ErrorBoundary";
+import CrashingComponent from "../Components/CrashingComponent";
 
 const TogglHack = () => {
   const [count, setCount] = useState(0);
 
   const [fruit, setFruit] = useState("");
 
-  const [workspaces, setWorkspaces] = useState(null);
+  const [problem, setProblem] = useState("");
+
+  const [workspaces, setWorkspaces] = useState([{}]);
 
   const initialWorkspaceItem = { id: 0, name: " --- Select Workspace --- " };
   const [workspaceItems, setWorkspaceItems] = useState( [initialWorkspaceItem]);
-  const [workspaceItem, setWorkspaceItem] = useState(null);
+  const [workspaceItem, setWorkspaceItem] = useState("");
 
 
 
@@ -22,7 +26,7 @@ const TogglHack = () => {
   var appDetails = {
     togglApiKey: "TOKEN",
     togglWorkspaceId: "4841928",
-    user_agent: "PROJECT__EMAIL@gmail.com",
+    user_agent: "PROJECT_EMAIL@gmail.com",
     projectId: "164966905",
   };
 
@@ -133,6 +137,27 @@ const TogglHack = () => {
       </div>
       <hr />
       <div>
+        <p>Error inside function</p>
+        <button onClick={() => {
+            try {
+                let msg="Error intentionally thrown";
+                console.log(msg);
+                throw msg; 
+            } catch (error) {
+                setProblem(error);
+            }
+        }}>Throw now</button>
+        {(problem ? <label>{problem}</label>:"No problem yet...")}
+      </div>
+      <hr />
+      <div>
+        <p><b>Error boundary component</b></p>
+        <ErrorBoundary>
+            <CrashingComponent></CrashingComponent>
+        </ErrorBoundary>          
+      </div>
+      <hr />
+      <div>
         <p>Selected Fruit: {fruit}</p>
         <label>
           Select Fruit:
@@ -159,7 +184,8 @@ const TogglHack = () => {
                   console.log("change workspace");
               }}>
             {workspaceItems.map(
-                (item) => <option key={item.id}>{item.name}</option>)} 
+                (item) => <option key={item.id} 
+                value={`id=${item.id}, name=${item.name}`}>{item.name}</option>)} 
           </select>
         </label>
       </div>

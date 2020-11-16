@@ -12,6 +12,7 @@ import TogglConnectForm from "./Views/TogglConnectForm";
 import TogglOverview from "./Views/TogglOverview";
 import WeeksView from "./Views/WeeksView";
 import MonthsView from "./Views/MonthsView";
+import SettingsView from "./Views/SettingsView";
 import AboutView from "./Views/AboutView";
 
 class App extends React.Component {
@@ -97,6 +98,7 @@ class App extends React.Component {
                 {/* <li><Link to={"/overview"} className="nav-link">Overview</Link></li> */}
                 <li><Link to={"/weeks"} className="nav-link">Weeks</Link></li>
                 <li><Link to={"/months"} className="nav-link">Months</Link></li>
+                <li><Link to={"/settings"} className="nav-link">Settings</Link></li>
                 <li><Link to={"/about"} className="nav-link">About</Link></li>
               </ul>
             </nav>
@@ -112,6 +114,7 @@ class App extends React.Component {
               <Route path="/months" render={
                 props => (<MonthsView config={this.state.togglConfig} />)
               } />
+              <Route path="/settings" component={SettingsView} />
               <Route path="/about" component={AboutView} />
               {/* <Route path="/overview" component={TogglOverview} /> */}
               </Switch>
