@@ -1,5 +1,5 @@
 import React from 'react';
-import {connectionStatus, ConnectionStatusContext} from '../Services/ConnectionStatusContext';
+import {ConnectionStatusContext, connectionStatus } from '../Services/ConnectionStatusContext';
 import WorkspaceDropdown from '../Components/WorkspaceDropdown';
 
 /*

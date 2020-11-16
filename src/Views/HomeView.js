@@ -4,9 +4,9 @@ import { ConnectionStatusContext } from "../Services/ConnectionStatusContext";
 
 class HomeView extends React.Component {
   render() {
-    const ctx = this.context;
-    console.log(ctx);
-    const content=(ctx.isConnected) 
+    const { status, consumerCallback } = this.context;
+    console.log(status);
+    const content=(status.isConnected) 
       ? <TimePeriodStatisticsComponent />
       : <label>-</label>;
 

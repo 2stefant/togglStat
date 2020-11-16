@@ -15,8 +15,6 @@ const TogglHack = () => {
   const [workspaceItems, setWorkspaceItems] = useState( [initialWorkspaceItem]);
   const [workspaceItem, setWorkspaceItem] = useState("");
 
-
-
   useEffect(() => {
     //document.title = `You clicked ${count} times`;
   });

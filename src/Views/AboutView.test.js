@@ -5,6 +5,12 @@ describe("AboutView", () => {
   const title = "titleX";
   const desc = "descriptionY";
 
+  test("should show About", () => {
+    render(<AboutView />);
+    let elem = screen.getByText("About");
+    expect(elem).toBeInTheDocument();
+  });
+
   const baseTestFlow = (t, d) => {
     render(<AboutView title={t} description={d} />);
     let texts = [t, d];
@@ -15,12 +21,6 @@ describe("AboutView", () => {
       }
     }
   };
-
-  test("should show About", () => {
-    render(<AboutView />);
-    let elem = screen.getByText("About");
-    expect(elem).toBeInTheDocument();
-  });
 
   test("should show Title", () => {
     baseTestFlow(title, null);
