@@ -4,10 +4,13 @@ import reportWebVitals from './reportWebVitals';
 
 import './index.css';
 import App from './App';
+import TogglHack from './Tests/TogglHack';
 
 ReactDOM.render((
     <React.StrictMode>
-        <App />
+        <App/>
+        {/* To perform plain calls towards Toggl, enable the line below. */}
+        <TogglHack /> 
     </React.StrictMode>
 ), document.getElementById('root'));
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import {connectionStatus, ConnectionStatusContext} from '../Services/ConnectionStatusContext';
+import WorkspaceDropdown from '../Components/WorkspaceDropdown';
 
 /*
 Demonstractes the following React concepts:
@@ -121,6 +122,7 @@ class TogglConnectForm extends React.Component {
         ? <>
             <label>{(ws) ? `Connected to workspace: '${ws}'`: null}</label>
             <button name="disconnect" onClick={this.handleDisconnect}>Disconnect</button>
+            <WorkspaceDropdown togglApiKey={this.state.togglConfig.apiKey}></WorkspaceDropdown>
           </>
         : <label>{(err) ? JSON.stringify(err) : null}</label>;
     }
@@ -134,6 +136,7 @@ class TogglConnectForm extends React.Component {
         return (
             <>
             <form onSubmit={this.handleConnect}>
+                <h2>Connect</h2>
                 {this.createInputField("ApiKey", "apiKey", _.apiKey)}
                 {this.createInputField("WorkspaceId", "workspaceId", _.workspaceId)}
                 {this.createInputField("ProjectId", "projectId", _.projectId)}

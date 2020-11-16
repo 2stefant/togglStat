@@ -14,9 +14,9 @@ class TogglOverview extends React.Component{
         super(props);
         this.state = {
           togglConfig:{
-            apiKey: '',
+            apiKey: 'TOKEN',
             workspaceId: '4841928',
-            user_agent: 'togglStat_stefan.lindepil@gmail.com',
+            user_agent: 'PROJECT__EMAIL@gmail.com',
             projectId: '164966905'
           },
           workspaceName:null,
