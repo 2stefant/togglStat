@@ -5,10 +5,12 @@ import axios from "axios";
 import ConfigService from "../services/ConfigService";
 import InputField from "../components/InputField";
 
+const config=ConfigService.getSingleton();
+
 class SettingsView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = ConfigService.getSingleton().getLocalStorageDefaultValues();
+    this.state = config.getLocalStorageDefaultValues();
   }
 
   componentDidMount() {
@@ -31,10 +33,9 @@ class SettingsView extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     
-    ConfigService.getSingleton()
-      .setLocalStorageDefaultValues(this.state);
+    config.setLocalStorageDefaultValues(this.state);
 
-    this.refreshSaveResult("Default values saved.");
+    this.refreshSaveResult("Default values stored.");
   };
 
   refreshSaveResult = (text) => {
@@ -48,7 +49,6 @@ class SettingsView extends React.Component {
     let value=e.target.value;
 
     if(field ==="debugMode"){
-      console.log(e.target.checked)
       value=e.target.checked ? "yes": "";
     }else{
       e.preventDefault();
@@ -59,16 +59,24 @@ class SettingsView extends React.Component {
     this.refreshSaveResult("");
   };
 
+  jsxDebugContent =(defaultValues)=>{
+    return (defaultValues.debugMode) ? <>
+    <hr/>
+    <h3>=== Debug ===</h3>
+    <ErrorBoundary>
+      <CrashingComponent />
+    </ErrorBoundary>
+    <br/>
+    <label>{JSON.stringify(defaultValues)}</label>
+    </>: null;
+  }
+
   render() {
     const defaultValues = this.state;
 
     return (
       <div>
         <h2>Settings</h2>
-        <ErrorBoundary>
-          <CrashingComponent />
-        </ErrorBoundary>
-        <label>{JSON.stringify(defaultValues)}</label>
 
         <form onSubmit={this.handleSubmit}>
           <InputField id="defaultWorkspaceId"
@@ -95,13 +103,17 @@ class SettingsView extends React.Component {
               name="debugMode"
               onChange={this.handleChange}
               checked={(defaultValues.debugMode) ? true: false }
-            /><span>Debug Mode</span>
+            /> <span>Debug Mode</span>
           </label>
           <br/>
 
-          <input type="submit" value="Save" />
+          <label>
+            <input type="submit" value="Save" 
+            /> <span id="saveResultLabel"></span>
+          </label>
         </form>
-        <label id="saveResultLabel"></label>
+        
+        {this.jsxDebugContent(defaultValues)}
       </div>
     );
   }

@@ -1,7 +1,9 @@
 import React,{ useState, useEffect } from "react";
 import ErrorBoundary from "../components/ErrorBoundary";
 import CrashingComponent from "../components/CrashingComponent";
-
+/**
+ * To perform plain calls towards Toggl.
+ */
 const TogglHack = () => {
   const [count, setCount] = useState(0);
 
@@ -124,10 +126,7 @@ const TogglHack = () => {
 
   return (
     <div className="Hack">
-      <h3>=== Hack ===</h3>
-      <button name="toggl" onClick={() => toggl()}>
-        Toggl
-      </button>
+      <button name="toggl" onClick={() => toggl()}>Toggl</button>
       <label>Press F12 in Chrome, check console log view.</label>
       <label>{workspaces ? JSON.stringify(workspaces) : "-"}</label>
       <hr />

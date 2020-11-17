@@ -16,17 +16,16 @@ import MonthsView from "./views/MonthsView";
 import SettingsView from "./views/SettingsView";
 import AboutView from "./views/AboutView";
 
+const config=ConfigService.getSingleton();
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
-    let keys=ConfigService.getSingleton()
-      .getToggleKeys();
+    let keys=config.getToggleKeys();
 
     this.state = {
-      togglConfig: ConfigService.getSingleton()
-        .cloneTogglKeysObject(keys),
+      togglConfig: config.cloneTogglKeysObject(keys),
       workspaceName: null,
       userInfo: null,
       projectInfo: null,
@@ -71,8 +70,7 @@ class App extends React.Component {
     
     //Update main state.
     this.setState({
-      togglConfig: ConfigService.getSingleton()
-        .cloneTogglKeysObject(conn.togglConfig),
+      togglConfig: config.cloneTogglKeysObject(conn.togglConfig),
       workspaceName: conn.workspaceName,
       connection: {
         status: connectionStatus.connected,
