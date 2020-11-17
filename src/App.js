@@ -25,7 +25,8 @@ class App extends React.Component {
       .getToggleKeys();
 
     this.state = {
-      togglConfig: this.createTogglConfig(keys),
+      togglConfig: ConfigService.getSingleton()
+        .cloneTogglKeysObject(keys),
       workspaceName: null,
       userInfo: null,
       projectInfo: null,
@@ -38,15 +39,6 @@ class App extends React.Component {
         consumerCallback: this.handleConnectionCallback
       }
     };
-  }
-
-  createTogglConfig(togglConfig){
-    return {
-      apiKey: togglConfig.apiKey,
-      workspaceId: togglConfig.workspaceId,
-      userAgent: togglConfig.userAgent,
-      projectId: togglConfig.projectId,
-    }
   }
 
   showCurrentYear() {
@@ -79,7 +71,8 @@ class App extends React.Component {
     
     //Update main state.
     this.setState({
-      togglConfig: this.createTogglConfig(conn.togglConfig),
+      togglConfig: ConfigService.getSingleton()
+        .cloneTogglKeysObject(conn.togglConfig),
       workspaceName: conn.workspaceName,
       connection: {
         status: connectionStatus.connected,

@@ -1,6 +1,7 @@
 import React from 'react';
 import {ConnectionStatusContext, connectionStatus } from '../services/ConnectionStatusContext';
 import WorkspaceDropdown from '../components/WorkspaceDropdown';
+import ConfigService from "../services/ConfigService";
 
 /*
 Demonstractes the following React concepts:
@@ -16,15 +17,9 @@ class TogglConnectForm extends React.Component {
     constructor(props) {
         super(props);
 
-        let _=props.config;
-
         this.state = {
-            togglConfig: {
-                apiKey: _.apiKey,
-                workspaceId: _.workspaceId,
-                userAgent: _.userAgent,
-                projectId: _.projectId,
-            },
+            togglConfig: ConfigService.getSingleton()
+                .cloneTogglKeysObject(props.config),
             workspaceName: null,
             connectionError: null
         };

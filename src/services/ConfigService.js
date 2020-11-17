@@ -37,21 +37,37 @@ var ConfigService = (function()
             /**
              * Retrieves constants from dotenv '.env' file.
              * @param  {string} defaultProjectId The string representation of an id.
-             * @return {object} Containing several properties: defaultProjectId
+             * @return {object} Containing several properties.
              */
             getToggleKeys: function() {
                 return togglKeys;
             },
 
             /**
+             * Creates a new toggl keys object.
+             * @param  {string} keys Keys to clone, if null empty object is created.
+             * @return {object} Containing several properties.
+             */
+            cloneTogglKeysObject(keys){
+
+                return {
+                  apiKey: keys ? keys.apiKey : null,
+                  workspaceId: keys ? keys.workspaceId : null,
+                  userAgent: keys ? keys.userAgent : null,
+                  projectId: keys ? keys.projectId : null
+                }
+            },
+
+            /**
              * Retrieves values from local storage.
-             * @param  {string} defaultProjectId The string representation of an id.
+             * @param  {string} defaultProjectId The string representation of a project id.
              * @return {object} Containing several properties: defaultProjectId
              */
             getLocalStorageDefaultValues: function() {
-                const result={
-                    defaultProjectId: ls.get("defaultProjectId") || ""
-                };
+                let result=this.createLocalStorageDefaultValues(
+                    ls.get("defaultProjectId") || "",
+                    ls.get("defaultWorkspaceId") || ""
+                );
                 //console.log(result);
             
                 return result;
@@ -61,10 +77,27 @@ var ConfigService = (function()
              * Saves values to local storage.
              * @param  {string} defaultProjectId The string representation of an id.
              */
-            setLocalStorageDefaultValues: function(defaultProjectId){
+            setLocalStorageDefaultValues: function(values){
+
                 //console.log(defaultProjectId);
-                ls.set("defaultProjectId",defaultProjectId);
-            }
+                ls.set("defaultProjectId",values.defaultProjectId);
+                ls.set("defaultWorkspaceId",values.defaultWorkspaceId);
+            },
+
+              /**
+             * Creates a new default values object.
+             * @param  {string} values Values to combine in an object.
+             * @return {object} Containing several properties.
+             */
+            createLocalStorageDefaultValues(
+                projectId, 
+                workspaceId){
+                
+                return {
+                    defaultProjectId: projectId,
+                    defaultWorkspaceId: workspaceId
+                };
+            },
         }
     }
 
