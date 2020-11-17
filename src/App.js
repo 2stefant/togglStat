@@ -22,10 +22,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    let keys=config.getToggleKeys();
-
     this.state = {
-      togglConfig: config.cloneTogglKeysObject(keys),
+      togglConfig: config.getTogglKeys(),
       workspaceName: null,
       userInfo: null,
       projectInfo: null,
@@ -70,7 +68,7 @@ class App extends React.Component {
     
     //Update main state.
     this.setState({
-      togglConfig: config.cloneTogglKeysObject(conn.togglConfig),
+      togglConfig: conn.togglConfig,
       workspaceName: conn.workspaceName,
       connection: {
         status: connectionStatus.connected,

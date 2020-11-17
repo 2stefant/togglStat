@@ -16,11 +16,12 @@ var ConfigService = (function()
     * https://www.npmjs.com/package/dotenv
     */
     const readDotenvKeys = () => {
+
         var keys = {
             apiKey: process.env.REACT_APP_TOGGL_API_TOKEN,
-            workspaceId: process.env.REACT_APP_TOGGL_WORKSPACE_ID,
-            userAgent: process.env.REACT_APP_TOGGL_USER_AGENT,
-            projectId: process.env.REACT_APP_TOGGL_PROJECT_ID,
+            showDebugOption: 
+                (process.env.REACT_APP_SHOW_DEBUG_OPTION) 
+                ? true: false,
         };
         //console.log(keys);
 
@@ -39,23 +40,8 @@ var ConfigService = (function()
              * @param  {string} defaultProjectId The string representation of an id.
              * @return {object} Containing several properties.
              */
-            getToggleKeys: function() {
+            getTogglKeys: function() {
                 return togglKeys;
-            },
-
-            /**
-             * Creates a new toggl keys object.
-             * @param  {string} keys Keys to clone, if null empty object is created.
-             * @return {object} Containing several properties.
-             */
-            cloneTogglKeysObject(keys){
-
-                return {
-                  apiKey: keys ? keys.apiKey : null,
-                  workspaceId: keys ? keys.workspaceId : null,
-                  userAgent: keys ? keys.userAgent : null,
-                  projectId: keys ? keys.projectId : null
-                }
             },
 
             /**
@@ -70,7 +56,12 @@ var ConfigService = (function()
                     ls.get("defaultEmail") || "",
                     ls.get("debugMode") || ""
                 );
-                //console.log(result);
+
+                /*Override debugMode if .env says not 
+                to show debug option at all.*/
+                if(!this.getTogglKeys().showDebugOption){
+                    result.debugMode=false;
+                }
             
                 return result;
             },
@@ -102,7 +93,8 @@ var ConfigService = (function()
                     defaultProjectId: projectId,
                     defaultWorkspaceId: workspaceId,
                     defaultEmail: email,
-                    debugMode: debugMode
+                    debugMode: debugMode,
+                    getUserAgent: () => {return `togglStat_${email}`;}
                 };
             },
         }

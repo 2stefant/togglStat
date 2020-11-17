@@ -1,9 +1,10 @@
 import React from "react";
 import ErrorBoundary from "../components/ErrorBoundary";
-import CrashingComponent from "../components/CrashingComponent";
+import CrashingComponent from "../hacks/CrashingComponent";
 import axios from "axios";
 import ConfigService from "../services/ConfigService";
 import InputField from "../components/InputField";
+import DebugPanel from "../components/DebugPanel";
 
 const config=ConfigService.getSingleton();
 
@@ -60,9 +61,8 @@ class SettingsView extends React.Component {
   };
 
   jsxDebugContent =(defaultValues)=>{
-    return (defaultValues.debugMode) ? <>
-    <hr/>
-    <h3>=== Debug ===</h3>
+    return (config.getTogglKeys().showDebugOption && defaultValues.debugMode) ? <>
+    <DebugPanel/>
     <ErrorBoundary>
       <CrashingComponent />
     </ErrorBoundary>
@@ -96,17 +96,19 @@ class SettingsView extends React.Component {
             value={defaultValues.defaultEmail}
             handleChange={this.handleChange}
           />
+          {config.getTogglKeys().showDebugOption ? 
+            <><br/>
+            <label>
+              <input type="checkbox" 
+                id="debugMode"
+                name="debugMode"
+                onChange={this.handleChange}
+                checked={(defaultValues.debugMode) ? true: false }
+              /> <span>Debug Mode</span>
+            </label>
+            </>: null
+          }
           <br/>
-          <label>
-            <input type="checkbox" 
-              id="debugMode"
-              name="debugMode"
-              onChange={this.handleChange}
-              checked={(defaultValues.debugMode) ? true: false }
-            /> <span>Debug Mode</span>
-          </label>
-          <br/>
-
           <label>
             <input type="submit" value="Save" 
             /> <span id="saveResultLabel"></span>

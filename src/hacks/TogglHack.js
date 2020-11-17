@@ -1,6 +1,11 @@
 import React,{ useState, useEffect } from "react";
 import ErrorBoundary from "../components/ErrorBoundary";
-import CrashingComponent from "../components/CrashingComponent";
+import CrashingComponent from "./CrashingComponent";
+import ConfigService from "../services/ConfigService";
+
+const config=ConfigService.getSingleton();
+var TogglClient = require("toggl-api");
+
 /**
  * To perform plain calls towards Toggl.
  */
@@ -17,23 +22,10 @@ const TogglHack = () => {
   const [workspaceItems, setWorkspaceItems] = useState( [initialWorkspaceItem]);
   const [workspaceItem, setWorkspaceItem] = useState("");
 
-  useEffect(() => {
-    //document.title = `You clicked ${count} times`;
-  });
-
-  // Tweak our main app details variable, adding a "user_agent" string
-  // A "user_agent" is a Toggl API requirement
-  var appDetails = {
-    togglApiKey: "TOKEN",
-    togglWorkspaceId: "4841928",
-    user_agent: "PROJECT_EMAIL@gmail.com",
-    projectId: "164966905",
-  };
-
   function toggl() {
-    var TogglClient = require("toggl-api");
-    var toggl = new TogglClient({ apiToken: appDetails.togglApiKey });
 
+    const keys=config.getTogglKeys();
+    var toggl = new TogglClient({ apiToken: keys.apiKey });
 
     toggl.getWorkspaces(function (err, workspaces) {
       console.log("WORKSPACES ==== ");
@@ -60,9 +52,9 @@ const TogglHack = () => {
     var opts = {
       since: "2020-11-01",
       until: "2020-11-19",
-      user_agent: appDetails.user_agent,
-      workspace_id: appDetails.togglWorkspaceId,
-      project_ids: appDetails.projectId,
+      user_agent: config.getLocalStorageDefaultValues().getUserAgent(),
+      workspace_id: keys.togglWorkspaceId,
+      project_ids: keys.projectId,
     };
 
     toggl.summaryReport(opts, function (err, report) {
@@ -88,7 +80,7 @@ const TogglHack = () => {
       console.log(timeEntry);
     });
 
-    toggl.getProjectData(appDetails.projectId, function (err, projData) {
+    toggl.getProjectData(keys.projectId, function (err, projData) {
       console.log("PROJECT DATA ====");
       console.log(projData);
     });
@@ -128,7 +120,7 @@ const TogglHack = () => {
     <div className="Hack">
       <button name="toggl" onClick={() => toggl()}>Toggl</button>
       <label>Press F12 in Chrome, check console log view.</label>
-      <label>{workspaces ? JSON.stringify(workspaces) : "-"}</label>
+      <label>WORKSPACES: {workspaces ? JSON.stringify(workspaces) : "-"}</label>
       <hr />
       <div>
         <p>You clicked {count} times</p>

@@ -2,6 +2,7 @@ import React from 'react';
 import {ConnectionStatusContext, connectionStatus } from '../services/ConnectionStatusContext';
 import WorkspaceDropdown from '../components/WorkspaceDropdown';
 import ConfigService from "../services/ConfigService";
+const config=ConfigService.getSingleton();
 
 /*
 Demonstractes the following React concepts:
@@ -18,8 +19,7 @@ class TogglConnectForm extends React.Component {
         super(props);
 
         this.state = {
-            togglConfig: ConfigService.getSingleton()
-                .cloneTogglKeysObject(props.config),
+            togglConfig: props.config,
             workspaceName: null,
             connectionError: null
         };
@@ -35,10 +35,7 @@ class TogglConnectForm extends React.Component {
         //Update the local state of the component.
         this.setState({
             togglConfig:{
-                apiKey: token,
-                workspaceId: wId,
-                userAgent: inputs.userAgent.value,
-                projectId: inputs.projectId.value,
+                apiKey: token
             },
             workspaceName: null,
             connectionError: null,
@@ -133,9 +130,6 @@ class TogglConnectForm extends React.Component {
             <form onSubmit={this.handleConnect}>
                 <h2>Connect</h2>
                 {this.createInputField("ApiKey", "apiKey", _.apiKey)}
-                {this.createInputField("WorkspaceId", "workspaceId", _.workspaceId)}
-                {this.createInputField("ProjectId", "projectId", _.projectId)}
-                {this.createInputField("UserAgent", "userAgent", _.userAgent)}
                 <input type="submit" value="Connect" />
             </form>
             {this.createResultSection(ws, err)}

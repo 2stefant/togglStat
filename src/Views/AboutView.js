@@ -1,6 +1,7 @@
 import React from 'react';
 import ConfigService from "../services/ConfigService";
 import TogglHack from '../hacks/TogglHack';
+import DebugPanel from '../components/DebugPanel';
 
 const config=ConfigService.getSingleton();
 
@@ -17,8 +18,7 @@ const AboutView = ({title, description}) =>{
       return (config.getLocalStorageDefaultValues()
          .debugMode ) ? 
       <>
-         <hr/>
-         <h3>=== Debug ===</h3>
+         <DebugPanel/>
          <TogglHack/>
       </>: null;
     }
