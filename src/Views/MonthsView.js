@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react";
 import React, { useState, useContext } from "react";
 import Calendar from "react-calendar";
-import ListComponent from "../Components/ListComponent";
-import { ConnectionStatusContext } from "../Services/ConnectionStatusContext";
+import ListComponent from "../components/ListComponent";
+import { ConnectionStatusContext } from "../services/ConnectionStatusContext";
 
 /*
 Demonstractes the following React concepts:

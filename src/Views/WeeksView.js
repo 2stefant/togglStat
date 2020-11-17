@@ -1,7 +1,7 @@
 import React from "react";
-import ListComponent from "../Components/ListComponent";
+import ListComponent from "../components/ListComponent";
 import moment from "moment";
-import { ConnectionStatusContext } from "../Services/ConnectionStatusContext";
+import { ConnectionStatusContext } from "../services/ConnectionStatusContext";
 
 class WeeksView extends React.Component {
 constructor(props) {

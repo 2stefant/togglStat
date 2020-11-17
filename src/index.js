@@ -1,16 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
-
 import './index.css';
 import App from './App';
-import TogglHack from './Tests/TogglHack';
+import TogglHack from './hacks/TogglHack';
 
 ReactDOM.render((
     <React.StrictMode>
         <App/>
         {/* To perform plain calls towards Toggl, enable the line below. */}
-        <TogglHack /> 
+        {/* <TogglHack />  */}
     </React.StrictMode>
 ), document.getElementById('root'));
 

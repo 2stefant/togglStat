@@ -1,6 +1,6 @@
 import React from 'react';
-import {ConnectionStatusContext, connectionStatus } from '../Services/ConnectionStatusContext';
-import WorkspaceDropdown from '../Components/WorkspaceDropdown';
+import {ConnectionStatusContext, connectionStatus } from '../services/ConnectionStatusContext';
+import WorkspaceDropdown from '../components/WorkspaceDropdown';
 
 /*
 Demonstractes the following React concepts:

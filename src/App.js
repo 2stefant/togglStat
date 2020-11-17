@@ -3,28 +3,29 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import moment from 'moment';
 
 //import "./App.css"; //TODO remove content inside css file.
-import {ConnectionStatusContext, connectionStatus} from './Services/ConnectionStatusContext';
+import {ConnectionStatusContext, connectionStatus} from './services/ConnectionStatusContext';
+import ConfigService from "./services/ConfigService";
 
-import HeaderComponent from "./Components/HeaderComponent";
+import HeaderComponent from "./components/HeaderComponent";
 
-import HomeView from "./Views/HomeView";
-import TogglConnectForm from "./Views/TogglConnectForm";
-import TogglOverview from "./Views/TogglOverview";
-import WeeksView from "./Views/WeeksView";
-import MonthsView from "./Views/MonthsView";
-import SettingsView from "./Views/SettingsView";
-import AboutView from "./Views/AboutView";
+import HomeView from "./views/HomeView";
+import TogglConnectForm from "./views/TogglConnectForm";
+import TogglOverview from "./views/TogglOverview";
+import WeeksView from "./views/WeeksView";
+import MonthsView from "./views/MonthsView";
+import SettingsView from "./views/SettingsView";
+import AboutView from "./views/AboutView";
+
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+
+    let keys=ConfigService.getSingleton()
+      .getToggleKeys();
+
     this.state = {
-      togglConfig: {
-        apiKey: "TOKEN",
-        workspaceId: "4841928",
-        userAgent: "togglStat_stefan.lindepil@gmail.com",
-        projectId: "164966905",
-      },
+      togglConfig: this.createTogglConfig(keys),
       workspaceName: null,
       userInfo: null,
       projectInfo: null,
@@ -37,6 +38,15 @@ class App extends React.Component {
         consumerCallback: this.handleConnectionCallback
       }
     };
+  }
+
+  createTogglConfig(togglConfig){
+    return {
+      apiKey: togglConfig.apiKey,
+      workspaceId: togglConfig.workspaceId,
+      userAgent: togglConfig.userAgent,
+      projectId: togglConfig.projectId,
+    }
   }
 
   showCurrentYear() {
@@ -67,16 +77,9 @@ class App extends React.Component {
     console.log("=== handleTogglConnect");
     console.log(conn);
     
-    let _=conn.togglConfig;
-    
     //Update main state.
     this.setState({
-      togglConfig:{
-          apiKey: _.apiKey,
-          workspaceId: _.workspaceId,
-          userAgent: _.userAgent,
-          projectId: _.projectId,
-      },
+      togglConfig: this.createTogglConfig(conn.togglConfig),
       workspaceName: conn.workspaceName,
       connection: {
         status: connectionStatus.connected,

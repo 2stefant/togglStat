@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import {
   ConnectionStatusContext,
   connectionStatus,
-} from "../Services/ConnectionStatusContext";
+} from "../services/ConnectionStatusContext";
 import HomeView from "./HomeView";
 
 describe("HomeView", () => {

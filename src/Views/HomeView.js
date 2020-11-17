@@ -1,6 +1,6 @@
 import React from "react";
-import TimePeriodStatisticsComponent from "../Components/TimePeriodStatisticsComponent";
-import { ConnectionStatusContext } from "../Services/ConnectionStatusContext";
+import TimePeriodStatisticsComponent from "../components/TimePeriodStatisticsComponent";
+import { ConnectionStatusContext } from "../services/ConnectionStatusContext";
 
 class HomeView extends React.Component {
   render() {

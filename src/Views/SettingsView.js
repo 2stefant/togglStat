@@ -1,6 +1,6 @@
 import React from "react";
-import ErrorBoundary from "../Components/ErrorBoundary";
-import CrashingComponent from "../Components/CrashingComponent";
+import ErrorBoundary from "../components/ErrorBoundary";
+import CrashingComponent from "../components/CrashingComponent";
 import axios from "axios"
 
 class SettingsView extends React.Component {

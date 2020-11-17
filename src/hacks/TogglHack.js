@@ -1,6 +1,6 @@
 import React,{ useState, useEffect } from "react";
-import ErrorBoundary from "../Components/ErrorBoundary";
-import CrashingComponent from "../Components/CrashingComponent";
+import ErrorBoundary from "../components/ErrorBoundary";
+import CrashingComponent from "../components/CrashingComponent";
 
 const TogglHack = () => {
   const [count, setCount] = useState(0);

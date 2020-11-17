@@ -1,6 +1,6 @@
 import React from 'react';
-import UserInfoComponent from '../Components/UserInfoComponent';
-import ProjectInfoComponent from '../Components/ProjectInfoComponent';
+import UserInfoComponent from '../components/UserInfoComponent';
+import ProjectInfoComponent from '../components/ProjectInfoComponent';
 
 /*
 Demonstractes the following React concepts:
