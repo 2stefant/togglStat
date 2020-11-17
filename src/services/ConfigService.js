@@ -61,12 +61,14 @@ var ConfigService = (function()
             /**
              * Retrieves values from local storage.
              * @param  {string} defaultProjectId The string representation of a project id.
-             * @return {object} Containing several properties: defaultProjectId
+             * @return {object} Containing several properties.
              */
             getLocalStorageDefaultValues: function() {
                 let result=this.createLocalStorageDefaultValues(
                     ls.get("defaultProjectId") || "",
-                    ls.get("defaultWorkspaceId") || ""
+                    ls.get("defaultWorkspaceId") || "",
+                    ls.get("defaultEmail") || "",
+                    ls.get("debugMode") || ""
                 );
                 //console.log(result);
             
@@ -75,27 +77,32 @@ var ConfigService = (function()
             
             /**
              * Saves values to local storage.
-             * @param  {string} defaultProjectId The string representation of an id.
+             * @param  {string} values Containing several properties.
              */
             setLocalStorageDefaultValues: function(values){
 
                 //console.log(defaultProjectId);
                 ls.set("defaultProjectId",values.defaultProjectId);
                 ls.set("defaultWorkspaceId",values.defaultWorkspaceId);
+                ls.set("defaultEmail",values.defaultEmail);
+                ls.set("debugMode",values.debugMode);
             },
 
               /**
              * Creates a new default values object.
-             * @param  {string} values Values to combine in an object.
              * @return {object} Containing several properties.
              */
             createLocalStorageDefaultValues(
                 projectId, 
-                workspaceId){
+                workspaceId,
+                email,
+                debugMode){
                 
                 return {
                     defaultProjectId: projectId,
-                    defaultWorkspaceId: workspaceId
+                    defaultWorkspaceId: workspaceId,
+                    defaultEmail: email,
+                    debugMode: debugMode
                 };
             },
         }
