@@ -14,7 +14,6 @@ const MonthsView = () => {
   const [value, onChange] = useState(new Date());
 
   const ctx = useContext(ConnectionStatusContext);
-  console.log(ctx);
   let content = null;
 
   const months = [
@@ -31,7 +30,7 @@ const MonthsView = () => {
     content = (
       <>
         <ListComponent title={"Months"} items={months} hideTitle={true} />
-        <button name="weeks" onClick={navigateWeeksView}>Weeks</button>
+        <button name="weeks" onClick={() => navigateWeeksView()}>Weeks</button>
         <div>
           <Calendar
             onChange={onChange}

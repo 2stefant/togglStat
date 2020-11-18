@@ -2,6 +2,7 @@ import React from "react";
 import ListComponent from "../components/ListComponent";
 import moment from "moment";
 import { ConnectionStatusContext } from "../services/ConnectionStatusContext";
+import BasicDropdown from '../components/BasicDropdown';
 
 class WeeksView extends React.Component {
   constructor(props) {
@@ -10,10 +11,10 @@ class WeeksView extends React.Component {
 
   getAllSundays(){
     const start=moment().startOf('year'); //first day of year
-    console.log(start.format('YYYY-MM-DD'));
+    //console.log(start.format('YYYY-MM-DD'));
 
     const end = moment().startOf('days'); //today
-    console.log(end.format('YYYY-MM-DD'));
+    //console.log(end.format('YYYY-MM-DD'));
 
     //calculate only Sunday
     const dailyInfo = [true, false, false, false, false, false, false]
@@ -45,10 +46,17 @@ class WeeksView extends React.Component {
       return sundays;
   }
 
-  jsxSundays=()=>{
-    return this.getAllSundays().map((day, ix) => {
-      return <option key={ix}>{day} - Week X</option>
+  jsxSundaysDropDown = () =>{
+
+    let items = this.getAllSundays().map((day, ix) => {
+        return { id: ix+1, name: `${day} - Week X` };
     });
+
+    return <BasicDropdown 
+        idNameItems={items} 
+        title="Sunday-Week"
+        callBack={() =>{ console.log("callBack-BasicDropdown-sundays");}} 
+    />
   }
 
   render() {
@@ -78,9 +86,7 @@ class WeeksView extends React.Component {
               <tr>{tableHeaderWeekDays}</tr>
             </thead>
           </table>
-          <select>
-            {this.jsxSundays()}
-          </select>
+          {this.jsxSundaysDropDown()}
         </>
         }
       </div>
