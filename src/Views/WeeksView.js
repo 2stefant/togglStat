@@ -4,13 +4,52 @@ import moment from "moment";
 import { ConnectionStatusContext } from "../services/ConnectionStatusContext";
 
 class WeeksView extends React.Component {
-constructor(props) {
-super(props);
-}
+  constructor(props) {
+    super(props);
+  }
 
-  navigateMonthsView = () => {
-    console.log("navigateMonthsView");
-  };
+  getAllSundays(){
+    const start=moment().startOf('year'); //first day of year
+    console.log(start.format('YYYY-MM-DD'));
+
+    const end = moment().startOf('days'); //today
+    console.log(end.format('YYYY-MM-DD'));
+
+    //calculate only Sunday
+    const dailyInfo = [true, false, false, false, false, false, false]
+    const sundayIndex=0;
+    let totalDays = 0;
+    var sundays=[];
+  
+    dailyInfo.forEach((info, index) => {
+      if (info === true) {
+          let current = start.clone();
+          
+          if (current.isoWeekday() <= index) {
+            current = current.isoWeekday(index);
+          } else {
+            current.add(1, 'weeks').isoWeekday(index);
+          }
+
+          while (current.isSameOrBefore(end)) {
+            let mom=current.day(7 + index);
+            
+            let sun=mom.format('YYYY-MM-DD');
+            sundays.push(sun);
+            //console.log(sun);
+            totalDays += 1;
+          }
+        }
+      });
+
+      return sundays;
+  }
+
+  jsxSundays=()=>{
+    return this.getAllSundays().map((day, ix) => {
+      return <option key={ix}>{day} - Week X</option>
+    });
+  }
 
   render() {
     const weeks = [
@@ -28,35 +67,25 @@ super(props);
             );
     });
 
-    const ctx = this.context;
-    console.log(ctx);
-    let content = null;
-
-    if (ctx.isConnected) {
-      content = (
+    return (
+      <div className="WeeksView">
+        <h2>Weeks</h2>
+        {!this.context.status.isConnected ? null: 
         <>
           <ListComponent title={"Weeks"} items={weeks} hideTitle={true}/>
-          <button name="months" onClick={() => this.navigateMonthsView()}>
-            Months
-          </button>
           <table>
             <thead>
               <tr>{tableHeaderWeekDays}</tr>
             </thead>
           </table>
-          )
+          <select>
+            {this.jsxSundays()}
+          </select>
         </>
-      );
-    }
-
-    return (
-      <div className="WeeksView">
-        <h2>Weeks</h2>
-        {content}
+        }
       </div>
     );
   }
 }
-
 WeeksView.contextType = ConnectionStatusContext;
 export default WeeksView;

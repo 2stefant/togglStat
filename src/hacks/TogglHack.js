@@ -29,7 +29,6 @@ const TogglHack = () => {
     var toggl = new TogglClient({ apiToken: keys.apiKey });
     const dv=config.getLocalStorageDefaultValues();
 
-
     toggl.getWorkspaces(function (err, workspaces) {
       console.log("WORKSPACES ==== ");
       console.log(workspaces);
@@ -57,7 +56,7 @@ const TogglHack = () => {
       until: "2020-11-19",
       user_agent: dv.getUserAgent(),
       workspace_id: dv.defaultWorkspaceId,
-      project_ids: keys.projectId,
+      project_ids: dv.defaultProjectId,
     };
 
     toggl.getWorkspaceProjects(dv.defaultWorkspaceId, {actual_hours: true}, function (err, projects) {
@@ -88,7 +87,7 @@ const TogglHack = () => {
       console.log(timeEntry);
     });
 
-    toggl.getProjectData(keys.projectId, function (err, projData) {
+    toggl.getProjectData(dv.defaultProjectId, function (err, projData) {
       console.log("PROJECT DATA ====");
       console.log(projData);
     });

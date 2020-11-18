@@ -97,6 +97,7 @@ var ConfigService = (function()
                     getUserAgent: () => {return `togglStat_${email}`;}
                 };
             },
+
         }
     }
 

@@ -27,7 +27,7 @@ const MonthsView = () => {
     console.log("navigateWeeksView");
   };
 
-  if (ctx.isConnected) {
+  if (ctx.status.isConnected) {
     content = (
       <>
         <ListComponent title={"Months"} items={months} hideTitle={true} />

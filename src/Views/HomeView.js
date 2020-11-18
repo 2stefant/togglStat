@@ -24,16 +24,18 @@ class HomeView extends React.Component {
   }
 
   switchPeriod(period) {
-    let dt=new Date();
 
     switch(period) {
-      case "day": return dt.getDate(); 
-      case "week": return moment(dt).week(); 
-      case "month": return dt.getMonth(); 
-      case "year": return dt.getFullYear(); 
+      case "day": return moment().date(); 
+      case "week": return moment().week(); 
+      // case "month": return moment().month();  //Does not work
+      // case "quarter": moment().quarter();
+      case "year": return moment().year(); 
       default: throw "Invalid case in switchPeriod.";
     }
   }
+
+
 
   
 
@@ -75,20 +77,20 @@ class HomeView extends React.Component {
         <br/>
         <label>Current Day: {this.switchPeriod("day")}</label>
         <label>, Week: {this.switchPeriod("week")}</label>
-        <label>, Month: {this.switchPeriod("month")}</label>
+        {/* <label>, Month: {this.switchPeriod("month")}</label> */}
+        {/* <label>, Quarter: {this.switchPeriod("quarter")}</label> */}
         <label>, Year: {this.switchPeriod("year")}</label>
         <br/>
         {this.context.status.isConnected ? <TimePeriodStatisticsComponent />: null}
         <br/>
         {!this.context.status.isConnected ? null
         : <>
-          <label><b>Projects</b></label>
           {!this.state.projects ? null:
             <>
             <ListComponent title={"Projects"} 
               items={this.state.projects.map(_ =>{
                 return {id: _.id, name: `${_.name}, actualHours=${_.actual_hours}`};
-            })} hideTitle={true} />
+            })} />
             <br/>
             <label>{this.state.defaultValues.debugMode ? JSON.stringify(this.state.projects):null}</label>
             </>
