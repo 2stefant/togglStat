@@ -1,6 +1,5 @@
 import React from 'react';
 import {ConnectionStatusContext, connectionStatus } from '../services/ConnectionStatusContext';
-import WorkspaceDropdown from '../components/WorkspaceDropdown';
 import ConfigService from "../services/ConfigService";
 import BasicDropdown from '../components/BasicDropdown';
 const config=ConfigService.getSingleton();
@@ -9,12 +8,12 @@ const TogglClient = require("toggl-api");
 /*
 Demonstractes the following React concepts:
  - Basic class component using local state.
- - Event propagation up to parent.
  - React form with submit logic.
  - Api interaction verus Toggl.com.
- - Error handling. TODO
+ - Basic error handling. 
+ - Context usage.
 */
-class TogglConnectForm extends React.Component {
+class ConnectView extends React.Component {
     static contextType = ConnectionStatusContext;
 
     constructor(props) {
@@ -22,46 +21,39 @@ class TogglConnectForm extends React.Component {
 
         this.state = {
             togglConfig: props.config,
-            workspaceName: null,
             connectionError: null,
-            userData: null
-            
+            userData: null,
+            defaultValues: config.getLocalStorageDefaultValues()
         };
     }
 
     handleConnect = (event) => {
         event.preventDefault();
-        this.setConnectionInfo(null,null, null);
+        this.setConnectionInfo(null, null);
         var toggl = new TogglClient(
             { apiToken: this.state.togglConfig.apiKey });
 
         const self = this;
 
         toggl.getUserData({}, function (err, userData) {
-            console.log("USER DATA ====");
+            //console.log("USER DATA ====");
 
             if(!userData || err){
                 console.log("Could not connect");
-                self.setConnectionInfo(null,err,null);
+                self.setConnectionInfo(err,null);
                 return;
             }
-            console.log(userData);
 
             const { status, consumerCallback } = self.context;
             consumerCallback(connectionStatus.connected);
 
-            //TODO remove ws
-            self.setConnectionInfo(null,null, userData);
-
-            /* Only propagate connection info up to parent
-            if successfully retrieved the workspace. */
-            //self.props.onConnect(self.state);
+            self.setConnectionInfo(null, userData);
         });
     }
 
     handleDisconnect = (event) => {
         event.preventDefault();
-        this.setConnectionInfo(null, null,null);
+        this.setConnectionInfo(null,null);
         const { status, consumerCallback } = this.context;
         consumerCallback(connectionStatus.notConnected);
     }
@@ -69,9 +61,8 @@ class TogglConnectForm extends React.Component {
     /**
      * Update the local state of the component. 
      */
-    setConnectionInfo = (ws, err, userData) => {
+    setConnectionInfo = (err, userData) => {
         this.setState({ 
-            workspaceName: ws,
             connectionError: err,
             userData: userData 
         });
@@ -94,7 +85,8 @@ class TogglConnectForm extends React.Component {
         return <BasicDropdown 
             idNameItems={items} 
             title="Workspace"
-            callBack={() =>{ console.log("hello");}} 
+            selectedId={this.state.defaultValues.defaultWorkspaceId}
+            callBack={() =>{ console.log("callBack-BasicDropdown");}} 
         />
     }
 
@@ -102,6 +94,7 @@ class TogglConnectForm extends React.Component {
         const key=this.state.togglConfig.apiKey;
         const err=this.state.connectionError;
         const ud=this.state.userData;
+        const isConnected = this.context.status==connectionStatus.connected;
 
         return (
             <>
@@ -110,25 +103,35 @@ class TogglConnectForm extends React.Component {
                 <div><label>
                     ApiKey: {this.hidePartsOfKey(key)}
                 </label></div>
-                <input disabled={ud} type="submit" value="Connect" />
+                <input disabled={isConnected} type="submit" value="Connect" />
                 &ensp;&ensp;
                 <button name="disconnect" 
-                    disabled={!ud} 
+                    disabled={!isConnected} 
                     onClick={this.handleDisconnect}
                 >Disconnect</button>
+                 {!ud ? null: 
+                <>
+                    &ensp;&ensp;
+                    <label>{ud.email}</label>
+                    &ensp;&ensp;
+                    <label>{ud.fullname}</label>
+                </>
+            }
             </form>
             <br/>
-            {this.tryShowDropdown(ud)}
+            {isConnected ? this.tryShowDropdown(ud): null}
             <br/>
-            {!ud ? null: JSON.stringify(ud)}
+            {ud && this.state.defaultValues.debugMode 
+                ? JSON.stringify(ud): null
+            }
             <br/>
-            <label>{(!err) ? null
+            <label>{!err ? null
                 :" => Connection failure:\n" + JSON.stringify(err)}</label>
             <br/>
             </>
         )
     };
 };
-export default TogglConnectForm;
+export default ConnectView;
 //TODO read https://goshakkk.name/submit-time-validation-react/
 

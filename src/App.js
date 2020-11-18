@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import moment from 'moment';
 
 //import "./App.css"; //TODO remove content inside css file.
 import {ConnectionStatusContext, connectionStatus} from './services/ConnectionStatusContext';
@@ -9,8 +8,7 @@ import ConfigService from "./services/ConfigService";
 import HeaderComponent from "./components/HeaderComponent";
 
 import HomeView from "./views/HomeView";
-import TogglConnectForm from "./views/TogglConnectForm";
-import TogglOverview from "./views/TogglOverview";
+import ConnectView from "./views/ConnectView";
 import WeeksView from "./views/WeeksView";
 import MonthsView from "./views/MonthsView";
 import SettingsView from "./views/SettingsView";
@@ -23,31 +21,15 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      togglConfig: config.getTogglKeys(),
       workspaceName: null,
       userInfo: null,
       projectInfo: null,
       projectSummary: null,
-      currentYear: this.showCurrentYear(),
-      currentMonth: this.showCurrentMonth(),
-      currentWeek: this.showCurrentWeek(),
       connection: {
         status: connectionStatus.notConnected,
         consumerCallback: this.handleConnectionCallback
       }
     };
-  }
-
-  showCurrentYear() {
-    return new Date().getFullYear();
-  }
-
-  showCurrentMonth() {
-    return new Date().getMonth();
-  }
-
-  showCurrentWeek() {
-    return moment(new Date()).week();
   }
 
   handleConnectionCallback = (newStatus) => {
@@ -57,21 +39,6 @@ class App extends React.Component {
     this.setState({
       connection: {
         status: newStatus,
-        consumerCallback: this.handleConnectionCallback
-      }
-    });
-  }
-
-  handleTogglConnect = (conn) => {
-    console.log("=== handleTogglConnect");
-    console.log(conn);
-    
-    //Update main state.
-    this.setState({
-      togglConfig: conn.togglConfig,
-      workspaceName: conn.workspaceName,
-      connection: {
-        status: connectionStatus.connected,
         consumerCallback: this.handleConnectionCallback
       }
     });
@@ -98,19 +65,19 @@ class App extends React.Component {
             <Switch>
               <Route exact path="/" component={HomeView} />
               <Route path="/connect" render={
-                props => (<TogglConnectForm config={this.state.togglConfig} onConnect={this.handleTogglConnect} />)
+                // props => (<ConnectView config={keys} onConnect={this.handleTogglConnect} />)
+                props => (<ConnectView config={config.getTogglKeys()} />)
               } />
               <Route path="/weeks" render={
-                props => (<WeeksView config={this.state.togglConfig} />)
+                props => (<WeeksView config={config.getTogglKeys()} />)
               } />
               <Route path="/months" render={
-                props => (<MonthsView config={this.state.togglConfig} />)
+                props => (<MonthsView config={config.getTogglKeys()} />)
               } />
               <Route path="/settings" component={SettingsView} />
               <Route path="/about" render={
                 props => <AboutView title="togglStat" description="Statistics for reported time in Toggl." />
               }/>
-              {/* <Route path="/overview" component={TogglOverview} /> */}
               </Switch>
           </Router>
       </ConnectionStatusContext.Provider>

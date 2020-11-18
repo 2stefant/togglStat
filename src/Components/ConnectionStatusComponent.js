@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import {ConnectionStatusContext} from '../services/ConnectionStatusContext';
+import {ConnectionStatusContext} from "../services/ConnectionStatusContext";
 
 class ConnectionStatusComponent extends React.Component {
   render() {
