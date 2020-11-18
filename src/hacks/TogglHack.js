@@ -2,6 +2,7 @@ import React,{ useState, useEffect } from "react";
 import ErrorBoundary from "../components/ErrorBoundary";
 import CrashingComponent from "./CrashingComponent";
 import ConfigService from "../services/ConfigService";
+import BasicDropdown from "../components/BasicDropdown";
 
 const config=ConfigService.getSingleton();
 var TogglClient = require("toggl-api");
@@ -166,6 +167,19 @@ const TogglHack = () => {
           </select>
         </label>
       </div>
+
+      <hr />
+      <div>
+        <BasicDropdown idNameItems={[
+          {id:1, name: "one"},
+          {id:2, name: "two"}]} title="Car" selectedId={6} 
+          callBack={(selectedItem) =>{
+            console.log("callback up from dropdown")
+            console.log(selectedItem);
+          }}/>
+      </div>
+
+
       <hr />
       <div>
         <p>Selected Workspace: {workspaceItem}</p>

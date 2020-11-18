@@ -50,7 +50,7 @@ export const WorkspaceDropdown = ({togglApiKey}) => {
           }}
         >
           {workspaceItems.map((item) => (
-            <option key={item.id}>{item.name}</option>
+            <option key={item.id} value={item.id}>{item.name}</option>
           ))}
         </select>
       </label>

@@ -31,10 +31,6 @@ describe("HomeView", () => {
     expect(elem).toBeInTheDocument(text);
   };
 
-  test("should NOT show any Statistics, mock Context", () => {
-    baseTestFlow(false, "-");
-  });
-
   test("should show Statistics, mock Context", () => {
     baseTestFlow(true, "Reported Time Statistics");
   });
