@@ -3,6 +3,7 @@ import {ConnectionStatusContext, connectionStatus } from '../services/Connection
 import WorkspaceDropdown from '../components/WorkspaceDropdown';
 import ConfigService from "../services/ConfigService";
 const config=ConfigService.getSingleton();
+const TogglClient = require("toggl-api");
 
 /*
 Demonstractes the following React concepts:
@@ -20,6 +21,7 @@ class TogglConnectForm extends React.Component {
 
         this.state = {
             togglConfig: props.config,
+            tryConnect: false,
             workspaceName: null,
             connectionError: null
         };
@@ -27,35 +29,22 @@ class TogglConnectForm extends React.Component {
 
     handleConnect = (event) => {
         event.preventDefault();
-        const inputs = event.target.getElementsByTagName("input");
-
-        const wId=inputs.workspaceId.value;
-        const token=inputs.apiKey.value;
-
-        //Update the local state of the component.
-        this.setState({
-            togglConfig:{
-                apiKey: token
-            },
-            workspaceName: null,
-            connectionError: null,
-        });
-
-        var TogglClient = require("toggl-api");
-        var toggl = new TogglClient({ apiToken: token });
-        this.getWorkSpaceInfo(toggl, wId);
+        
+        this.setState({tryConnect: true});
+        //var toggl = new TogglClient({ apiToken: this.state.togglConfig.apiKey });
+        //this.getWorkSpaceInfo(toggl, wId);
     }
 
     handleDisconnect = (event) => {
         event.preventDefault();
-        console.log("handleDisconnect");
         this.setConnectionInfo(null, null);
-
         const { status, consumerCallback } = this.context;
         consumerCallback(connectionStatus.notConnected);
     }
 
-    //Update the local state of the component.
+    /**
+     * Update the local state of the component. 
+     */
     setConnectionInfo = (ws, err) => {
         this.setState({ 
             workspaceName: ws,
@@ -100,39 +89,39 @@ class TogglConnectForm extends React.Component {
         });
     }
 
-    createInputField = (name, id, value) => {
-        return <div>
-            <label>{name}:
-                <input name={id} type="text" defaultValue={value} />
-            </label>
-        </div>;
-    }
-
     createResultSection=(ws, err) => {
 
         return (ws && !err) 
         ? <>
             <label>{(ws) ? `Connected to workspace: '${ws}'`: null}</label>
             <button name="disconnect" onClick={this.handleDisconnect}>Disconnect</button>
-            <WorkspaceDropdown togglApiKey={this.state.togglConfig.apiKey}></WorkspaceDropdown>
           </>
         : <label>{(err) ? JSON.stringify(err) : null}</label>;
     }
 
+    hidePartsOfKey(key){
+        let len=key.length;
+        if(len>1){
+            len=len/2;
+        }
+
+        return key.substring(0,len) + "**********";
+    }
+
     render() {
-        let ws=this.state.workspaceName;
-        let err=this.state.connectionError;
-
-        let _=this.state.togglConfig;
-
+        const key=this.state.togglConfig.apiKey;
         return (
             <>
             <form onSubmit={this.handleConnect}>
                 <h2>Connect</h2>
-                {this.createInputField("ApiKey", "apiKey", _.apiKey)}
+                <div>
+                    <label>ApiKey: {this.hidePartsOfKey(key)}</label>
+                </div>
                 <input type="submit" value="Connect" />
+                <WorkspaceDropdown togglApiKey={this.state.tryConnect ? key: null}></WorkspaceDropdown>
             </form>
-            {this.createResultSection(ws, err)}
+            {this.createResultSection(
+                this.state.workspaceName, this.state.connectionError)}
             </>
         )
     };

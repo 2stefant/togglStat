@@ -92,7 +92,7 @@ class SettingsView extends React.Component {
           />
           <br/>
           <InputField id="defaultEmail"
-            title="Default Email (needed as 'user_agent' attribute when accessing Toggl Api)"
+            title="Default Email"
             value={defaultValues.defaultEmail}
             handleChange={this.handleChange}
           />
@@ -108,6 +108,7 @@ class SettingsView extends React.Component {
             </label>
             </>: null
           }
+          <br/>
           <br/>
           <label>
             <input type="submit" value="Save" 

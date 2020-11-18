@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
+var TogglClient = require("toggl-api");
 
 export const WorkspaceDropdown = ({togglApiKey}) => {
   const initialWorkspaceItem = { id: 0, name: " --- Select Workspace --- " };
   const [workspaceItems, setWorkspaceItems] = useState([initialWorkspaceItem]);
   const [workspaceItem, setWorkspaceItem] = useState(null);
 
-  function getData(apiToken) {
-    var TogglClient = require("toggl-api");
+  function fillData(apiToken) {
+    if(!apiToken){
+      setWorkspaceItems([initialWorkspaceItem]);
+      return;
+    }
     var toggl = new TogglClient({ apiToken: apiToken });
 
     toggl.getWorkspaces(function (err, workspaces) {
@@ -21,13 +25,13 @@ export const WorkspaceDropdown = ({togglApiKey}) => {
       });
 
       items.unshift(initialWorkspaceItem);
-      console.log(items);
+      // console.log(items);
       setWorkspaceItems(items);
     });
   }
 
   useEffect(() => {
-    getData(togglApiKey);  
+    fillData(togglApiKey);  
   }, []); //Empty array - Make sure useEffect is run only once.
   
 
@@ -42,7 +46,7 @@ export const WorkspaceDropdown = ({togglApiKey}) => {
             event.preventDefault();
             let val = event.target.value;
             setWorkspaceItem(val);
-            console.log("change workspace");
+            // console.log("change workspace");
           }}
         >
           {workspaceItems.map((item) => (

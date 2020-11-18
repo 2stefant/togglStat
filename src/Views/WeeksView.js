@@ -30,7 +30,7 @@ super(props);
 
     const ctx = this.context;
     console.log(ctx);
-    let content = <label>-</label>;
+    let content = null;
 
     if (ctx.isConnected) {
       content = (

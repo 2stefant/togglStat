@@ -8,7 +8,7 @@ class HomeView extends React.Component {
     console.log(status);
     const content=(status.isConnected) 
       ? <TimePeriodStatisticsComponent />
-      : <label>-</label>;
+      : null;
 
     return (
       <div>

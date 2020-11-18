@@ -15,7 +15,7 @@ const MonthsView = () => {
 
   const ctx = useContext(ConnectionStatusContext);
   console.log(ctx);
-  let content = <label>-</label>;
+  let content = null;
 
   const months = [
     { id: 1, name: "jan" },
