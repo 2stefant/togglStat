@@ -3,15 +3,19 @@
 ## Features
 - Time reporting statistics web site interacting with [Toggl.com](https://toggl.com/).
 - Extends free version with weekly and monthly reports as well as pdf generation.
-- React application interacting with the public api towards Toggl.
+- React application interacting with the public api called "toggl-api" towards Toggl.
 - Components created are aimed to be generic and reusable.
- 
+- Uses a custom built npm package "@2stefant.org/alldays".
+  
 ## Background
-- This project was created to learn React, Github and some other stuff.
+- This project was created to learn React, Github, Curl
 - This project was initially the [assigment](./assignment/ReactKurs_Projektbeskrivning_2020HT_StefanLindepil.pdf) for a React development course at [Chas Academy](https://chasacademy.se) in Sweden.
 
 ## Learning the Toggl API
-Some details are summarized in [src/hacks/TogglApi.md](/src/hacks/TogglApi.md)
+Some details are summarized in [./src/hacks/TogglApi.md](./src/hacks/TogglApi.md)
+
+## Learning how to create a custom npm package
+Some details are summarized in [./src/hacks/NpmQuickstart.md](./src/hacks/NpmQuickstart.md)
 
 ## Source code folder structure
 - src
@@ -120,3 +124,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+

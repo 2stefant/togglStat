@@ -123,6 +123,17 @@ const TogglHack = () => {
     setFruit(val);
   }
 
+  const tryHomeMadeNpmPackage =() =>{
+
+    const alldays = require("@2stefant.org/alldays");
+
+    let days=alldays();
+    var str=JSON.stringify(days);
+    console.log(str);
+
+    return str;
+  }
+
   return (
     <div className="Hack">
       <button name="toggl" onClick={() => toggl()}>Toggl</button>
@@ -185,7 +196,6 @@ const TogglHack = () => {
           }}/>
       </div>
 
-
       <hr />
       <div>
         <p>Selected Workspace: {workspaceItem}</p>
@@ -202,6 +212,11 @@ const TogglHack = () => {
                 value={`id=${item.id}, name=${item.name}`}>{item.name}</option>)} 
           </select>
         </label>
+      </div>
+
+      <hr />
+      <div>
+        <p>Use home made npm package: {tryHomeMadeNpmPackage()}</p>
       </div>
     </div>
   );

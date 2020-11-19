@@ -46,6 +46,8 @@ class WeeksView extends React.Component {
       return sundays;
   }
 
+  
+
   jsxSundaysDropDown = () =>{
 
     let items = this.getAllSundays().map((day, ix) => {
