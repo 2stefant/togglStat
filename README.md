@@ -8,7 +8,7 @@
  
 ## Background
 - This project was created to learn React, Github and some other stuff.
-- This project was initially the assigment for a React development course at Chas Academy in Sweden.
+- This project was initially the [assigment](./assignment/ReactKurs_Projektbeskrivning_2020HT_StefanLindepil.pdf) for a React development course at [Chas Academy](chasacademy.se) in Sweden.
 
 ## Learning the Toggl API
 Some details are summarized in [src/hacks/TogglApi.md](/src/hacks/TogglApi.md)
