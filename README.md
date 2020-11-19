@@ -1,8 +1,8 @@
 # togglStat
 
 ## Features
-- Time reporting statistics web site interacting with Toggl.com.
-- Extends free version with weekly and monthly reports.
+- Time reporting statistics web site interacting with [Toggl.com](https://toggl.com/).
+- Extends free version with weekly and monthly reports as well as pdf generation.
 - React application interacting with the public api towards Toggl.
 - Components created are aimed to be generic and reusable.
  
