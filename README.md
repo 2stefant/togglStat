@@ -1,40 +1,104 @@
 # togglStat
+
+## Features
 - Time reporting statistics web site interacting with Toggl.com.
-
 - Extends free version with weekly and monthly reports.
+- React application interacting with the public api towards Toggl.
+- Components created are aimed to be generic and reusable.
+ 
+## Background
+- This project was created to learn React, Github and some other stuff.
+- This project was initially the assigment for a React development course at Chas Academy in Sweden.
 
-- React Client interacting with the public api at Toggl.com
+## Learning the Toggl API
+Some details are summarized in [src/hacks/TogglApi.md](/src/hacks/TogglApi.md)
 
-- This project was created to learn React and Github.
+## Source code folder structure
+- src
+  - components 
+    - Reusable headers, input fields, lists, dropdowns etc.
+  - hacks 
+    - Exploratory parts, curl + toggl api.
+  - services 
+    - Context for Toggl connection, encapsulation of local storage
+    and dotenv files ('.env') 
+  - views
+    - The different views of the application.
 
-# TODO ideer hur man ska dokumentera
-https://github.com/itailv/awesome-todo-app
+# Preconditions before using the application
+1. Clone the '.env.example' file and rename to '.env', located in the root folder.
+2. Create a free account at Toggl.com
+   - Create a workspace
+   - Create a project
+   - Start measure some time, give the entries some descriptions
+3. At Toggl.com, copy your API token at the bottom of the Profile page and paste it inside your '.env' file.
+   ```  
+   REACT_APP_TOGGL_API_TOKEN="YOUR-PRIVATE-TOKEN"
+   ```
+4. Optionally disallow **Debug option** by emptying the section
+   ```  
+   REACT_APP_SHOW_DEBUG_OPTION="" 
+   ```
 
-# TODO ideer anropa toggl javascript
-https://www.developerdrive.com/how-to-chart-your-hours-with-apis-javascript-and-svg/
+# Configure environment
+  
+## Setup the code with all dependencies
+First you need to initialize the code.
+In the project directory, you can run:
 
+### `npm install`
 
-
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
+## Start application
 In the project directory, you can run:
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This will run the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) 
+to view it in the browser.
+
+# How to use the application - Workflow
+1. Visit the Connect view.
+   - Click Connect
+     - If success, a dropdown with available **workspaces** are shown.
+     - Select one workspace.
+       - Then select one project.
+2. Visit the Home view.
+   - View information about project and statistics
+3. Visit the Weeks view.
+   - View weekly reported time.
+4. Visit the Months view.
+   - View monthly reported time.
+5. Optionally enable **Debug option** in '.env' file, restart
+   and visit the Settings view.
+   - Select the checkbox for Debug mode.
+     - Several views will show additional non-production features.
+
+# Future features
+
+- Layout 
+  - Styling
+  - Pictures
+  - Logo and icons
+
+- Charting, e.g. https://www.developerdrive.com/how-to-chart-your-hours-with-apis-javascript-and-svg/
+
+- Improved documentation
+  - Short video how to use the app
+  
+
+# Continue development
+## Run unit tests and code coverage.
+In the project directory, you can run:
+
+### `npm test`
+or
+### `npm test -- --coverage`
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Build for production
 
 ### `npm run build`
 
@@ -46,42 +110,13 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### Deployment
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
