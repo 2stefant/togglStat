@@ -43,3 +43,8 @@ $ npm install "@npm_account_name/howto"
 const howto = require("@npm_account_name/howto");
 console.log(howto());
 ```
+9. When a new version of the npm package is available, type:
+
+```
+$ npm add "@npm_account_name/howto"
+```

@@ -4,8 +4,11 @@ import CrashingComponent from "./CrashingComponent";
 import ConfigService from "../services/ConfigService";
 import BasicDropdown from "../components/BasicDropdown";
 
+
 const config=ConfigService.getSingleton();
 var TogglClient = require("toggl-api");
+
+
 
 /**
  * To perform plain calls towards Toggl.
@@ -125,9 +128,9 @@ const TogglHack = () => {
 
   const tryHomeMadeNpmPackage =() =>{
 
-    const alldays = require("@2stefant.org/alldays");
+    const {alldays} = require("@2stefant.org/alldays");
 
-    let days=alldays();
+    let days=alldays(0,"from1", "to2");
     var str=JSON.stringify(days);
     console.log(str);
 
