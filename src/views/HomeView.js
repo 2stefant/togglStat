@@ -39,9 +39,6 @@ class HomeView extends React.Component {
   }
 
 
-
-  
-
   tryShowProjects = () => {
     var toggl = new TogglClient(
         { apiToken: config.getTogglKeys().apiKey });
