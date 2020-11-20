@@ -12,9 +12,8 @@ All users can locate their API token at the bottom of the Profile page.
 ## Toggl-Api nuget package
 https://www.npmjs.com/package/toggl-api
 
-```
-npm install toggl-api --save
-```
+### `npm install toggl-api --save`
+
 
 ## Toggl-Api nuget documentation
 http://7eggs.github.io/node-toggl-api/index.html

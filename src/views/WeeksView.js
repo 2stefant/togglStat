@@ -3,60 +3,24 @@ import ListComponent from "../components/ListComponent";
 import moment from "moment";
 import { ConnectionStatusContext } from "../services/ConnectionStatusContext";
 import BasicDropdown from '../components/BasicDropdown';
+const {alldays} = require("@2stefant.org/alldays");
 
 class WeeksView extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  getAllSundays(){
-    const start=moment().startOf('year'); //first day of year
-    //console.log(start.format('YYYY-MM-DD'));
-
-    const end = moment().startOf('days'); //today
-    //console.log(end.format('YYYY-MM-DD'));
-
-    //calculate only Sunday
-    const dailyInfo = [true, false, false, false, false, false, false]
-    const sundayIndex=0;
-    let totalDays = 0;
-    var sundays=[];
-  
-    dailyInfo.forEach((info, index) => {
-      if (info === true) {
-          let current = start.clone();
-          
-          if (current.isoWeekday() <= index) {
-            current = current.isoWeekday(index);
-          } else {
-            current.add(1, 'weeks').isoWeekday(index);
-          }
-
-          while (current.isSameOrBefore(end)) {
-            let mom=current.day(7 + index);
-            
-            let sun=mom.format('YYYY-MM-DD');
-            sundays.push(sun);
-            //console.log(sun);
-            totalDays += 1;
-          }
-        }
-      });
-
-      return sundays;
-  }
-
-  
-
   jsxSundaysDropDown = () =>{
 
-    let items = this.getAllSundays().map((day, ix) => {
-        return { id: ix+1, name: `${day} - Week X` };
+    let days=alldays(7); 
+
+    let items = days.map((day, ix) => {
+        return { id: ix+1, name: `w${ix+1}, ${day}` };
     });
 
     return <BasicDropdown 
         idNameItems={items} 
-        title="Sunday-Week"
+        title="Sunday"
         callBack={() =>{ console.log("callBack-BasicDropdown-sundays");}} 
     />
   }

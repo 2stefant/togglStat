@@ -1,7 +1,7 @@
 # Quick start guide how to create an npm package.
-1. Create [npm](https://www.npmjs.com/) private account.
-2. Create public [github](https://github.com/) repository.
-3. Add _package.json_ file to repository root folder.
+### Create [npm](https://www.npmjs.com/) private account.
+### Create public [github](https://github.com/) repository.
+### Add _package.json_ file to repository root folder.
 ```
 {
   "name": "@npm_account_name/howto",
@@ -18,33 +18,31 @@
   ]
 }
 ```
-4. Add _index.js_ file in repository root folder.
+Add _index.js_ file in repository root folder.
 ``` javascript
 module.exports = function howto() {
   return "Hello npm package howto";
 };
 ```
-5. Open npm command prompt, type:
-``` 
-$ npm adduser
-``` 
+Login user versus npm
+
+` npm adduser`
    - Add your npm user account, password and associated email.
 
-6. In the same npm command prompt, publish your package by typing:
-``` 
-$ npm publish --access=public
-``` 
-7. In your consumer application that shall use your npm package, type in the npm prompt:
-``` 
-$ npm install "@npm_account_name/howto"
-``` 
-8. In one of your javascript code files type:
+Publish package
+
+`npm publish --access=public`
+
+Consume package (application that shall use your npm package)
+
+`npm install "@npm_account_name/howto"`
+
+Reference package (in your javascript code file)
 ``` javascript
 const howto = require("@npm_account_name/howto");
 console.log(howto());
 ```
-9. When a new version of the npm package is available, type:
+Update package (when a new version is available)
 
-```
-$ npm add "@npm_account_name/howto"
-```
+`npm update "@npm_account_name/howto"` 
+

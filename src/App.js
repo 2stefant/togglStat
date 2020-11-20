@@ -6,6 +6,8 @@ import {ConnectionStatusContext, connectionStatus} from './services/ConnectionSt
 import ConfigService from "./services/ConfigService";
 
 import HeaderComponent from "./components/HeaderComponent";
+import DebugPanel from './components/DebugPanel';
+import ErrorBoundary from "./components/ErrorBoundary";
 
 import HomeView from "./views/HomeView";
 import ConnectView from "./views/ConnectView";
@@ -13,6 +15,7 @@ import WeeksView from "./views/WeeksView";
 import MonthsView from "./views/MonthsView";
 import SettingsView from "./views/SettingsView";
 import AboutView from "./views/AboutView";
+import DebugView from "./views/DebugView";
 
 const config=ConfigService.getSingleton();
 
@@ -44,6 +47,24 @@ class App extends React.Component {
     });
   }
 
+  isDebugMode = () =>
+    config.getLocalStorageDefaultValues()
+      .debugMode ;
+
+  jsxDebugContent =()=>{
+    return  
+    <>
+       <DebugPanel/>
+        <ErrorBoundary>
+          <Route path="/debug" render={
+            props => <DebugView 
+              title="Debug" 
+              description="Debug features not to be used in production." />
+            }/>
+        </ErrorBoundary>
+    </>;
+  }
+
   render() {
     return (
       <>
@@ -59,6 +80,9 @@ class App extends React.Component {
                 <li><Link to={"/months"} className="nav-link">Months</Link></li>
                 <li><Link to={"/settings"} className="nav-link">Settings</Link></li>
                 <li><Link to={"/about"} className="nav-link">About</Link></li>
+                {!this.isDebugMode() ? null: 
+                  <li><Link to={"/debug"} className="nav-link">Debug</Link></li>
+                }
               </ul>
             </nav>
             <hr />
@@ -78,6 +102,9 @@ class App extends React.Component {
               <Route path="/about" render={
                 props => <AboutView title="togglStat" description="Statistics for reported time in Toggl." />
               }/>
+              {!this.isDebugMode() ? null: 
+                this.jsxDebugContent()
+              }
               </Switch>
           </Router>
       </ConnectionStatusContext.Provider>
@@ -86,3 +113,4 @@ class App extends React.Component {
   }
 }
 export default App;
+

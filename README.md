@@ -8,8 +8,17 @@
 - Uses a custom built npm package "@2stefant.org/alldays".
   
 ## Background
-- This project was created to learn React, Github, Curl
+- This project was created to learn React, Github, Curl etc.
 - This project was initially the [assigment](./assignment/ReactKurs_Projektbeskrivning_2020HT_StefanLindepil.pdf) for a React development course at [Chas Academy](https://chasacademy.se) in Sweden.
+
+
+# Technologies
+This application is written with:
+- Visual Studio Code
+- React
+- Javascript
+- Jest, JavaScript Testing Framework with Code coverage enabled as default
+- Moment.js, javaScript date library for parsing, validating, manipulating and formatting dates
 
 ## Learning the Toggl API
 Some details are summarized in [./src/hacks/TogglApi.md](./src/hacks/TogglApi.md)
@@ -101,6 +110,9 @@ or
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
+
+## Update referenced npm packages to newer versions.
+### `npm update`
 
 ## Build for production
 
