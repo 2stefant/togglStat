@@ -136,10 +136,42 @@ const TogglHack = () => {
 
   return (
     <div className="Hack">
+      <hr />      
       <button name="toggl" onClick={() => toggl()}>Toggl</button>
       <label>Press F12 in Chrome, check console log view.</label>
       <label>WORKSPACES: {workspaces ? JSON.stringify(workspaces) : "-"}</label>
       <hr />
+      <div>
+        <p>Selected Workspace: {workspaceItem}</p>
+        <label>
+          Select workspace:
+          <select value={workspaceItem} onChange={(event) => {
+                  event.preventDefault();
+                  let val=event.target.value;
+                  setWorkspaceItem(val);
+                  console.log("change workspace");
+              }}>
+            {workspaceItems.map(
+                (item) => <option key={item.id} 
+                value={`id=${item.id}, name=${item.name}`}>{item.name}</option>)} 
+          </select>
+        </label>
+      </div>
+      <hr />
+      <div>
+        {renderSundaysFromNpmPackage()}
+      </div>
+      <hr />      
+      <div>
+        <BasicDropdown idNameItems={[
+          {id:1, name: "one"},
+          {id:2, name: "two"}]} title="Car" selectedId={6} 
+          callBack={(selectedItem) =>{
+            console.log("callback up from dropdown")
+            console.log(selectedItem);
+          }}/>
+      </div>
+      <hr />      
       <div>
         <p>You clicked {count} times</p>
         <button onClick={() => {
@@ -183,40 +215,6 @@ const TogglHack = () => {
             <option value="mango">Mango</option>
           </select>
         </label>
-      </div>
-
-      <hr />
-      <div>
-        <BasicDropdown idNameItems={[
-          {id:1, name: "one"},
-          {id:2, name: "two"}]} title="Car" selectedId={6} 
-          callBack={(selectedItem) =>{
-            console.log("callback up from dropdown")
-            console.log(selectedItem);
-          }}/>
-      </div>
-
-      <hr />
-      <div>
-        <p>Selected Workspace: {workspaceItem}</p>
-        <label>
-          Select workspace:
-          <select value={workspaceItem} onChange={(event) => {
-                  event.preventDefault();
-                  let val=event.target.value;
-                  setWorkspaceItem(val);
-                  console.log("change workspace");
-              }}>
-            {workspaceItems.map(
-                (item) => <option key={item.id} 
-                value={`id=${item.id}, name=${item.name}`}>{item.name}</option>)} 
-          </select>
-        </label>
-      </div>
-
-      <hr />
-      <div>
-        {renderSundaysFromNpmPackage()}
       </div>
     </div>
   );

@@ -26,11 +26,6 @@ class WeeksView extends React.Component {
   }
 
   render() {
-    const weeks = [
-      { id: 1, name: "w23" },
-      { id: 5, name: "w24" },
-      { id: 8, name: "w27" },
-    ];
 
     const tableHeaderWeekDays = moment.weekdaysShort()
         .map((day) => {
@@ -46,7 +41,6 @@ class WeeksView extends React.Component {
         <h2>Weeks</h2>
         {!this.context.status.isConnected ? null: 
         <>
-          <ListComponent title={"Weeks"} items={weeks} hideTitle={true}/>
           <table>
             <thead>
               <tr>{tableHeaderWeekDays}</tr>

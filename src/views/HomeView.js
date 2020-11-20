@@ -1,9 +1,12 @@
 import React from "react";
-import TimePeriodStatisticsComponent from "../components/TimePeriodStatisticsComponent";
+import moment from 'moment';
+
 import {ConnectionStatusContext, connectionStatus} from "../services/ConnectionStatusContext";
 import ConfigService from "../services/ConfigService";
+
 import ListComponent from "../components/ListComponent";
-import moment from 'moment';
+import DebugPanel from '../components/DebugPanel';
+import TimePeriodStatisticsComponent from "../components/TimePeriodStatisticsComponent";
 
 const config=ConfigService.getSingleton();
 const TogglClient = require("toggl-api");
@@ -92,7 +95,13 @@ class HomeView extends React.Component {
                 return {id: _.id, name: `${_.name}, actualHours=${_.actual_hours}`};
             })} />
             <br/>
-            <label>{this.state.defaultValues.debugMode ? JSON.stringify(this.state.projects):null}</label>
+            {
+              !this.state.defaultValues.debugMode ? null:
+              <>
+                <DebugPanel/>
+                <label>Projects: {JSON.stringify(this.state.projects)}</label>
+              </>
+            }
             </>
           }
           </>

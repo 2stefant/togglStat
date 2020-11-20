@@ -80,9 +80,7 @@ class App extends React.Component {
                 <li><Link to={"/months"} className="nav-link">Months</Link></li>
                 <li><Link to={"/settings"} className="nav-link">Settings</Link></li>
                 <li><Link to={"/about"} className="nav-link">About</Link></li>
-                {!this.isDebugMode() ? null: 
-                  <li><Link to={"/debug"} className="nav-link">Debug</Link></li>
-                }
+                <li><Link to={"/debug"} className="nav-link">Debug</Link></li>
               </ul>
             </nav>
             <hr />
@@ -100,11 +98,13 @@ class App extends React.Component {
               } />
               <Route path="/settings" component={SettingsView} />
               <Route path="/about" render={
-                props => <AboutView title="togglStat" description="Statistics for reported time in Toggl." />
+                props => <AboutView title="togglStat" 
+                description="Statistics for reported time in Toggl." />
               }/>
-              {!this.isDebugMode() ? null: 
-                this.jsxDebugContent()
-              }
+              <Route path="/debug" render={
+                props => <DebugView title="Debug" 
+                description="Debug features not to be used in production." />
+            }/>
               </Switch>
           </Router>
       </ConnectionStatusContext.Provider>
