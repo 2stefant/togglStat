@@ -107,6 +107,37 @@ describe("DurationCalculator", () => {
     assertDurationProps(result, expected);
   });
 
+  test("should return toTime", () => {
+    // Arrange
+    const millis = 1000* (3 * 60 * 60  + 2* 60 + 1);
+    let expected = "03:02:01";
+    // Act
+    let result = calculator.toDurationTime(millis);
+    // Assert
+    assertDurationProps(result, expected);
+  });
+
+  test("should return toTime without seconds", () => {
+    // Arrange
+    const millis = 1000* (3 * 60 * 60  + 2* 60 + 1);
+    let expected = "03:02";
+    // Act
+    let result = calculator.toDurationTime(millis, true);
+    // Assert
+    assertDurationProps(result, expected);
+  });
+
+
+  test("should return toTime Empty", () => {
+    // Arrange
+    const millis = 0;
+    let expected = "";
+    // Act
+    let result = calculator.toDurationTime(millis);
+    // Assert
+    assertDurationProps(result, expected);
+  });
+
   function assertDurationProps(result, expected) {
     expect(result.hours).toBe(expected.hours);
     expect(result.minutes).toBe(expected.minutes);

@@ -12,8 +12,8 @@ var DurationCalculator = (function () {
        * format HH:MM:SS. Note that HH is not limited to 24 hours.
        * @param  {number} millis
        */
-      toDurationTime: function (millis = 0) {
-        return this.toDuration(millis).toTime();
+      toDurationTime: function (millis = 0, skipSeconds = false) {
+        return this.toDuration(millis).toTime(skipSeconds);
       },
       /**
        * Splits milli-seconds into duration with
@@ -35,21 +35,27 @@ var DurationCalculator = (function () {
         return new Duration(hours, mins, secs, title, millis);
       },
       calcMillis: function (hours, mins, secs) {
+        if (!hours) hours = 0;
+        if (!mins) mins = 0;
+        if (!secs) secs = 0;
         return 1000 * (secs + mins * 60 + hours * 60 * 60);
       },
       calcSecs: function (millis) {
+        if (!millis) millis = 0;
         return parseInt(millis / 1000);
       },
       calcSecsPart: function (millis) {
         return parseInt(this.calcSecs(millis) % 60);
       },
       calcMins: function (millis) {
+        if (!millis) millis = 0;
         return parseInt(this.calcSecs(millis) / 60);
       },
       calcMinsPart: function (millis) {
         return parseInt(this.calcMins(millis) % 60);
       },
       calcHours: function (millis) {
+        if (!millis) millis = 0;
         return parseInt(this.calcMins(millis) / 60);
       },
       calcHoursPartDay: function (millis) {
@@ -58,17 +64,26 @@ var DurationCalculator = (function () {
 
       /** Converts a value to atleast a two digit string. */
       twoDigits: function (value) {
+        if (!value) value = 0;
         return value < 10 ? `0${value}` : value;
       },
       /** 
        * Converts duration into military time format "HH:MM:SS".
        * Note that HH is not limited to 24 hours.
       */
-      toTime: function (hours, mins, secs) {
+      toTime: function (hours, mins, secs, skipSeconds = false) {
+        if (!hours) hours = 0;
+        if (!mins) mins = 0;
+        if (!secs) secs = 0;
+
+        if (hours < 1 && mins < 1 && secs < 1) {
+          return "-";
+        }
+
         return (
           `${this.twoDigits(hours)}:` +
-          `${this.twoDigits(mins)}:` +
-          `${this.twoDigits(secs)}`
+          `${this.twoDigits(mins)}` +
+          `${skipSeconds ? "" : ":" + this.twoDigits(secs)}`
         );
       },
     };
@@ -89,7 +104,7 @@ var DurationCalculator = (function () {
 export default DurationCalculator;
 
 export class Duration {
-  constructor(hours=0, mins=0, secs=0, title = null, raw = 0) {
+  constructor(hours = 0, mins = 0, secs = 0, title = null, raw = 0) {
     this.hours = hours;
     this.mins = mins;
     this.secs = secs;
@@ -130,8 +145,8 @@ export class Duration {
   }
 
   /** Converts duration into military time format "HH:MM:SS". */
-  toTime() {
+  toTime(skipSeconds=false) {
     return DurationCalculator.getSingleton()
-      .toTime(this.hours, this.mins, this.secs);
+      .toTime(this.hours, this.mins, this.secs, skipSeconds);
   }
 }
