@@ -14,23 +14,41 @@ var DurationCalculator = (function () {
        * @param  {string} title optional, title explaining what it is.
        * @return {object} duration object with metrics separated.
        */
-      toDuration: function (millis, title = null) {
-        let secs = millis / 1000;
+      toDuration: function (millis = 0, title = null) {
 
         return this.createDuration(
-          parseInt((secs / (60 * 60)) % 24),
-          parseInt((secs / 60) % 60),
-          parseInt(secs % 60),
+          this.calcHours(millis),
+          this.calcMinsPart(millis),
+          this.calcSecsPart(millis),
           title,
           millis
         );
       },
-      createDuration: function (hours, mins, secs, title = null, raw = 0) {
-        return new Duration(hours, mins, secs, title, raw);
+      createDuration: function (hours, mins, secs, title = null, millis = 0) {
+        return new Duration(hours, mins, secs, title, millis);
       },
       calcMillis: function (hours, mins, secs) {
         return 1000 * (secs + mins * 60 + hours * 60 * 60);
       },
+      calcSecs: function (millis) {
+        return parseInt(millis / 1000);
+      },
+      calcSecsPart: function (millis) {
+        return parseInt(this.calcSecs(millis) % 60);
+      },
+      calcMins: function (millis) {
+        return parseInt(this.calcSecs(millis) / 60);
+      },
+      calcMinsPart: function (millis) {
+        return parseInt(this.calcMins(millis) % 60);
+      },
+      calcHours: function (millis) {
+        return parseInt(this.calcMins(millis) / 60);
+      },
+      calcHoursPartDay: function (millis) {
+        return parseInt(this.calcHours(millis) % 24);
+      },
+
       /** Converts a value to atleast a two digit string. */
       twoDigits: function (value) {
         return value < 10 ? `0${value}` : value;
@@ -38,8 +56,8 @@ var DurationCalculator = (function () {
       /** Converts duration into military time format "HH:MM:SS". */
       toTime: function (hours, mins, secs) {
         return (
-          `${this.twoDigits(hours)}` +
-          `${this.twoDigits(mins)}` +
+          `${this.twoDigits(hours)}:` +
+          `${this.twoDigits(mins)}:` +
           `${this.twoDigits(secs)}`
         );
       },
@@ -60,13 +78,17 @@ var DurationCalculator = (function () {
 })();
 export default DurationCalculator;
 
-class Duration {
-  constructor(hours, mins, secs, title = null, raw = 0) {
+export class Duration {
+  constructor(hours=0, mins=0, secs=0, title = null, raw = 0) {
     this.hours = hours;
     this.mins = mins;
     this.secs = secs;
     this.title = title;
-    this.raw = raw; //TODO make this private.
+
+    if (raw && raw > 0 && raw !== this.calcRaw()) {
+      throw Error("Mismatch raw vs hours/mins/secs when creating Duration object.");
+    }
+    this.updateRaw();
   }
 
   /** Gets the private raw, original value in total milliseconds. */
@@ -81,10 +103,10 @@ class Duration {
     return this.raw && this.raw > 0
       ? this.raw
       : DurationCalculator.getSingleton().calcMillis(
-          this.hours,
-          this.mins,
-          this.secs
-        );
+        this.hours,
+        this.mins,
+        this.secs
+      );
   }
 
   /** Updates the raw value from the hours, minutes and seconds value,
@@ -100,6 +122,6 @@ class Duration {
   /** Converts duration into military time format "HH:MM:SS". */
   toTime() {
     return DurationCalculator.getSingleton()
-      .toTime(this.hours,this.mins,this.secs);
+      .toTime(this.hours, this.mins, this.secs);
   }
 }

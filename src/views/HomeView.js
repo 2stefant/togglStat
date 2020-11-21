@@ -34,7 +34,7 @@ class HomeView extends React.Component {
       // case "month": return moment().month();  //Does not work
       // case "quarter": moment().quarter();
       case "year": return moment().year(); 
-      default: throw "Invalid case in switchPeriod.";
+      default: throw Error("Invalid case in switchPeriod.");
     }
   }
 

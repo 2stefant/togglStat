@@ -5,6 +5,7 @@ import BasicDropdown from "../components/BasicDropdown";
 
 import { ConnectionStatusContext } from "../services/ConnectionStatusContext";
 
+import DurationCalculator from "../services/DurationCalculator";
 import ConfigService from "../services/ConfigService";
 const config = ConfigService.getSingleton();
 
@@ -17,9 +18,13 @@ class WeeksView extends React.Component {
 
     this.state = {
       weeks: this.getDropdownItems(),
-      weekData: null,
+      rawData: null,
       error: null,
     };
+  }
+
+  componentDidMount() {
+    this.fillWeekData();
   }
 
   getDropdownItems(){
@@ -32,10 +37,6 @@ class WeeksView extends React.Component {
     return items;
   }
 
-  componentDidMount() {
-
-    this.fillWeekData();
-  }
 
   jsxSundaysDropDown = (weeks) => {
 
@@ -61,8 +62,14 @@ class WeeksView extends React.Component {
   };
 
   jsxSummaryTableRows = (items) => {
+
+    const calc=DurationCalculator.getSingleton();
+
     const rows = items.map((item, ix) => {
-      return { id: ix, title: item.title.time_entry, time: item.time };
+
+      let dur=calc.toDuration(item.time);
+
+      return { id: ix, title: item.title.time_entry, time: dur.toTime() };
     });
 
     return(
