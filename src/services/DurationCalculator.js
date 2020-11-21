@@ -8,6 +8,14 @@ var DurationCalculator = (function () {
   function createSingleton() {
     return {
       /**
+       * Splits milli-seconds into duration and returns the military time
+       * format HH:MM:SS. Note that HH is not limited to 24 hours.
+       * @param  {number} millis
+       */
+      toDurationTime: function (millis = 0) {
+        return this.toDuration(millis).toTime();
+      },
+      /**
        * Splits milli-seconds into duration with
        * hours, minutes, seconds.
        * @param  {number} millis
@@ -15,7 +23,6 @@ var DurationCalculator = (function () {
        * @return {object} duration object with metrics separated.
        */
       toDuration: function (millis = 0, title = null) {
-
         return this.createDuration(
           this.calcHours(millis),
           this.calcMinsPart(millis),
@@ -53,7 +60,10 @@ var DurationCalculator = (function () {
       twoDigits: function (value) {
         return value < 10 ? `0${value}` : value;
       },
-      /** Converts duration into military time format "HH:MM:SS". */
+      /** 
+       * Converts duration into military time format "HH:MM:SS".
+       * Note that HH is not limited to 24 hours.
+      */
       toTime: function (hours, mins, secs) {
         return (
           `${this.twoDigits(hours)}:` +

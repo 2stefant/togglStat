@@ -52,8 +52,7 @@ class App extends React.Component {
       .debugMode ;
 
   jsxDebugContent =()=>{
-    return  
-    <>
+    return <>
        <DebugPanel/>
         <ErrorBoundary>
           <Route path="/debug" render={
