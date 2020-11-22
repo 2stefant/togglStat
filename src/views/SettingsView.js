@@ -1,7 +1,6 @@
 import React from "react";
 import ErrorBoundary from "../components/ErrorBoundary";
 import CrashingComponent from "../hacks/CrashingComponent";
-import axios from "axios";
 import ConfigService from "../services/ConfigService";
 import InputField from "../components/InputField";
 import DebugPanel from "../components/DebugPanel";
@@ -12,23 +11,6 @@ class SettingsView extends React.Component {
   constructor(props) {
     super(props);
     this.state = config.getLocalStorageDefaultValues();
-  }
-
-  componentDidMount() {
-    // this.setState({
-    //   defaultValues: ConfigService.getSingleton().getLocalStorageDefaultValues()
-    // });
-    // axios.get("https://jsonplaceholder.typicode.com/users/1")
-    // .then(response => {
-    //   console.log(response.data)
-    //   this.setState({
-    //     name: response.data.name,
-    //     email: response.data.email
-    //   });
-    // })
-    // .catch(error => {
-    //   console.log(error)
-    // })
   }
 
   handleSubmit = (e) => {

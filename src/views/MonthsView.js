@@ -20,6 +20,7 @@ Demonstrates the following React concepts:
  - Use context in function component.
  */
 const MonthsView = () => {
+  
   const getIdNameMonths = () => {
     const months = getMonthsShort();
     const currentYear = dayCurrentMetrics().currentYear;

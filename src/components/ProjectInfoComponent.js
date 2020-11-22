@@ -1,10 +1,6 @@
 import React from 'react';
 
 class ProjectInfoComponent extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         let pi=this.props.projectInfo;
         let ps=this.props.projectSummary;
