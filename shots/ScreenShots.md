@@ -1,7 +1,7 @@
 # togglStat Screen shots
 
 ## First time
-![home_notconn.jpg](./home_notconn.jpg?raw=true "Home first time")
+![home_notconn.jpg](home_notconn.jpg)
 
 ## Connect
 ![connect.jpg](./connect.jpg?raw=true "Connect")
