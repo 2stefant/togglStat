@@ -2,14 +2,17 @@
 
 ## Features
 - Time reporting statistics web site interacting with [Toggl.com](https://toggl.com/).
-- Extends free version with weekly and monthly reports as well as pdf generation.
+- Extends free version with weekly and monthly reports.
 - React application interacting with the public api called "toggl-api" towards Toggl.
-- Components created are aimed to be generic and reusable.
-- Uses a custom built npm package "@2stefant.org/alldays".
+- [Components](./src/components) created are aimed to be generic and reusable.
+- Uses a custom built npm package [@2stefant.org/alldays](https://github.com/2stefant/alldays).
+- Uses the [DurationCalculator](./src/services/DurationCalculator.js) for conversion from milliseconds to other time formats. 
+- Uses the [ConfigService](./src/services/ConfigService.js) for encapsulation of '.env' features and localstorage.
+
   
 ## Background
-- This project was created to learn React, Github, Curl etc.
-- This project was initially the [assigment](./assignment/ReactKurs_Projektbeskrivning_2020HT_StefanLindepil.pdf) for a React development course at [Chas Academy](https://chasacademy.se) in Sweden.
+- This project was created to learn React, Github, Curl, Typescript etc.
+- This project was initially the [assignment](./assignment/ReactKurs_Projektbeskrivning_2020HT_StefanLindepil.pdf) for a React development course at [Chas Academy](https://chasacademy.se) in Sweden.
 
 
 # Technologies
@@ -74,10 +77,14 @@ to view it in the browser.
 1. Visit the Connect view.
    - Click Connect
      - If success, a dropdown with available **workspaces** are shown.
-     - Select one workspace.
-       - Then select one project.
+     - Select one workspace, copy its **workspaceId**.
+       - Go to the settings page and paste the workspaceId into its input field. 
+       - Save settings.
 2. Visit the Home view.
-   - View information about project and statistics
+   - View information about project and statistics.
+   - Copy one **projectId**.
+   - Go to the settings page and paste the projectId into its input field. 
+    - Save settings.
 3. Visit the Weeks view.
    - View weekly reported time.
 4. Visit the Months view.
@@ -94,11 +101,12 @@ to view it in the browser.
   - Pictures
   - Logo and icons
 
+- Pdf generation for weekly/monthly reported time.
+
 - Charting, e.g. https://www.developerdrive.com/how-to-chart-your-hours-with-apis-javascript-and-svg/
 
 - Improved documentation
   - Short video how to use the app
-  
 
 # Continue development
 ## Run unit tests and code coverage.
