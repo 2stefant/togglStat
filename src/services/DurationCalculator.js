@@ -1,5 +1,5 @@
 /**
- * Encapsulation of Duraction calculations between
+ * Encapsulation of Duration calculations between
  * milliseconds to hours, minutes, seconds.
  */
 var DurationCalculator = (function () {

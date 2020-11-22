@@ -1,7 +1,7 @@
 import ls from 'local-storage'
 
 /**
- * Encapsulation of both dotenv configuration settings and local storage.
+ * Encapsulation of both dotenv (.env) configuration settings and local storage.
  */
 var ConfigService = (function()
 {
