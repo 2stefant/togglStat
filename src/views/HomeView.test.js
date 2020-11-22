@@ -1,8 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import {
-  ConnectionStatusContext,
-  connectionStatus,
-} from "../services/ConnectionStatusContext";
+import { ConnectionStatusContext, connectionStatus } from "../services/ConnectionStatusContext";
 import HomeView from "./HomeView";
 
 describe("HomeView", () => {

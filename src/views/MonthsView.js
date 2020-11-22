@@ -13,11 +13,17 @@ var TogglClient = require("toggl-api");
 const config = ConfigService.getSingleton();
 const calc = DurationCalculator.getSingleton();
 
-/*
-Demonstrates the following React concepts:
- - Arrow function component.
- - React hooks for state.
- - Use context in function component.
+/**
+ * Demonstrates the following React concepts:
+ * Arrow function component.
+ * React hooks for state.
+ * Basic error handling. 
+ * Use context in function component.
+ * Usage of custom made npm package (alldays).
+ * Services for separate logic (ConfigService, DurationCalculator).
+ * Reusable components (BasicDropdown, DebugPanel).
+ * Usage of api wrapper versus Toggl-Api.
+ * State-related rendering.
  */
 const MonthsView = () => {
   

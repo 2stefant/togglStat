@@ -25,7 +25,6 @@ export const WorkspaceDropdown = ({togglApiKey}) => {
       });
 
       items.unshift(initialWorkspaceItem);
-      // console.log(items);
       setWorkspaceItems(items);
     });
   }
@@ -46,7 +45,6 @@ export const WorkspaceDropdown = ({togglApiKey}) => {
             event.preventDefault();
             let val = event.target.value;
             setWorkspaceItem(val);
-            // console.log("change workspace");
           }}
         >
           {workspaceItems.map((item) => (

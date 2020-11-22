@@ -1,5 +1,9 @@
 import React from 'react';
-
+/**
+ * Demonstrates the following React concepts:
+ * Arrow function component.
+ * Reading data from '.env' file and determine product version.
+ */
 const AboutView = ({title, description}) =>{
 
    const jsxContent = (title, description) =>{

@@ -6,7 +6,16 @@ import InputField from "../components/InputField";
 import DebugPanel from "../components/DebugPanel";
 
 const config=ConfigService.getSingleton();
-
+/**
+ * Demonstrates the following React concepts:
+ * Usage of local storage both read and write.
+ * Demonstration of when Error boundary takes care of an error (only seen in debug mode).
+ * Basic class component using local state.
+ * Usage Context, Callbacks, Jsx.
+ * Services for separate logic (ConfigService).
+ * Reusable components (BasicDropdown, DebugPanel, ErrorBoundary, InputField).
+ * State-related rendering.
+ */
 class SettingsView extends React.Component {
   constructor(props) {
     super(props);
@@ -15,9 +24,7 @@ class SettingsView extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    
     config.setLocalStorageDefaultValues(this.state);
-
     this.refreshSaveResult("Default values stored.");
   };
 

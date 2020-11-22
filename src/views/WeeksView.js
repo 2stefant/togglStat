@@ -12,6 +12,17 @@ var TogglClient = require("toggl-api");
 const config = ConfigService.getSingleton();
 const calc = DurationCalculator.getSingleton();
 
+/**
+ * Demonstrates the following React concepts:
+ * Basic error handling. 
+ * Basic class component using local state.
+ * Usage Context, Callbacks, Jsx.
+ * Services for separate logic (ConfigService, DurationCalculator).
+ * Reusable components (BasicDropdown, DebugPanel).
+ * Usage of custom made npm package (alldays).
+ * Usage of api wrapper versus Toggl-Api.
+ * State-related rendering.
+ */
 class WeeksView extends React.Component {
   constructor(props) {
     super(props);

@@ -11,6 +11,17 @@ const { dayCurrentMetrics } = require("@2stefant.org/alldays");
 const config = ConfigService.getSingleton();
 const TogglClient = require("toggl-api");
 
+/**
+ * Demonstrates the following React concepts:
+ * Basic class component using local state.
+ * Usage Context, Callbacks, Jsx.
+ * Error boundary, subcomponents.
+ * Services for separate logic.
+ * Reusable components (ListComponent).
+ * Usage of api wrapper versus Toggl-Api.
+ * Usage of custom made npm package (alldays).
+ * State-related rendering.
+ */
 class HomeView extends React.Component {
   constructor(props) {
     super(props);

@@ -5,14 +5,19 @@ import BasicDropdown from '../components/BasicDropdown';
 const config=ConfigService.getSingleton();
 const TogglClient = require("toggl-api");
 
-/*
-Demonstractes the following React concepts:
- - Basic class component using local state.
- - React form with submit logic.
- - Api interaction verus Toggl.com.
- - Basic error handling. 
- - Context usage.
-*/
+/**
+ * Demonstrates the following React concepts:
+ * React form with submit logic.
+ * Basic error handling. 
+ * Basic class component using local state.
+ * Usage Context, Callbacks, Jsx.
+ * Updates Context state via consumer callback.
+ * Error boundary, subcomponents.
+ * Services for separate logic.
+ * Reusable components (BasicDropdown).
+ * Usage of api wrapper versus Toggl-Api.
+ * State-related rendering.
+ */
 class ConnectView extends React.Component {
     static contextType = ConnectionStatusContext;
 
@@ -42,7 +47,7 @@ class ConnectView extends React.Component {
                 return;
             }
 
-            const { status, consumerCallback } = self.context;
+            const { consumerCallback } = self.context;
             consumerCallback(connectionStatus.connected);
 
             self.setConnectionInfo(null, userData);
@@ -52,13 +57,10 @@ class ConnectView extends React.Component {
     handleDisconnect = (event) => {
         event.preventDefault();
         this.setConnectionInfo(null,null);
-        const { status, consumerCallback } = this.context;
+        const { consumerCallback } = this.context;
         consumerCallback(connectionStatus.notConnected);
     }
 
-    /**
-     * Update the local state of the component. 
-     */
     setConnectionInfo = (err, userData) => {
         this.setState({ 
             connectionError: err,

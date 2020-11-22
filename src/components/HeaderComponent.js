@@ -15,7 +15,6 @@ function HeaderComponent() {
                 <tr>
                     <td><h2>togglStat</h2></td>
                     <td><ConnectionStatusComponent/></td>
-                    {/* <td><AppStateComponent /></td> */}
                 </tr>
             </tbody>
         </table>

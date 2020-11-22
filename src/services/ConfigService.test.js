@@ -4,23 +4,19 @@ import ConfigService from "./ConfigService";
 describe("ConfigService", () => {
 
   test("should read dotenv values", () => {
-    //Arrange
+    // Arrange
     let service=ConfigService.getSingleton();
-
-    //Act 
+    // Act 
     let result=service.getTogglKeys();
-
-    //Assert
+    // Assert
     expect(result).not.toBeNull();
   });
 
   test("should contain Toggl-specific properties", () => {
-    //Arrange
+    // Arrange
     let service=ConfigService.getSingleton();
-
-    //Act 
+    // Act 
     let result=service.getTogglKeys();
-
     //Assert
     //expect(result.apiKey).toEqual("TOKEN");
   });
