@@ -23,6 +23,8 @@ const config=ConfigService.getSingleton();
  * Basic class component using local state.
  * Usage of Router, Context, Callbacks, Jsx.
  * Error boundary, subcomponents.
+ * The HeaderComponent contains another 
+ * ConnectionStatusComponent which uses an example for inline styling.
  */
 class App extends React.Component {
   constructor(props) {
