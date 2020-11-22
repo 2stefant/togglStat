@@ -74,6 +74,7 @@ Open [http://localhost:3000](http://localhost:3000)
 to view it in the browser.
 
 # How to use the application - Workflow
+Note: Example screenshots are available [here](./shots/ScreenShots.md)
 1. Visit the Connect view.
    - Click Connect
      - If success, a dropdown with available **workspaces** are shown.
