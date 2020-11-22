@@ -53,7 +53,6 @@ var ConfigService = (function()
                 let result=this.createLocalStorageDefaultValues(
                     ls.get("defaultProjectId") || "",
                     ls.get("defaultWorkspaceId") || "",
-                    ls.get("defaultEmail") || "",
                     ls.get("debugMode") || ""
                 );
 
@@ -75,7 +74,6 @@ var ConfigService = (function()
                 //console.log(defaultProjectId);
                 ls.set("defaultProjectId",values.defaultProjectId);
                 ls.set("defaultWorkspaceId",values.defaultWorkspaceId);
-                ls.set("defaultEmail",values.defaultEmail);
                 ls.set("debugMode",values.debugMode);
             },
 
@@ -86,15 +84,13 @@ var ConfigService = (function()
             createLocalStorageDefaultValues(
                 projectId, 
                 workspaceId,
-                email,
                 debugMode){
                 
                 return {
                     defaultProjectId: projectId,
                     defaultWorkspaceId: workspaceId,
-                    defaultEmail: email,
                     debugMode: debugMode,
-                    getUserAgent: () => {return `togglStat_${email}`;}
+                    getUserAgent: () => {return `togglStat_user@gmail.com`;}
                 };
             },
 

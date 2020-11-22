@@ -1,9 +1,9 @@
 {
   "name": "togglstat",
-  "version": "0.1.0",
+  "version": "0.8.0",
   "private": true,
   "dependencies": {
-    "@2stefant.org/alldays": "^1.8.6",
+    "@2stefant.org/alldays": "^1.9.4",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.2.0",

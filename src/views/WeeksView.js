@@ -7,7 +7,7 @@ import { ConnectionStatusContext } from "../services/ConnectionStatusContext";
 import DurationCalculator from "../services/DurationCalculator";
 import ConfigService from "../services/ConfigService";
 
-const { alldays, getDayWeeksRelative, getDayRelative} = require("@2stefant.org/alldays");
+const { alldays, dayInWeek, getWeekDaysShort } = require("@2stefant.org/alldays");
 var TogglClient = require("toggl-api");
 const config = ConfigService.getSingleton();
 const calc = DurationCalculator.getSingleton();
@@ -29,7 +29,10 @@ class WeeksView extends React.Component {
     let days = alldays(7);
 
     let items = days.map((day, ix) => {
-      return { id: ix + 1, name: `w${ix + 1}, ${day}`, sunday: day };
+      let num = ix + 1;
+      let zero = num < 10 ? "0" : "";
+      let week = `${zero}${num}, ${day}`;
+      return { id: num, name: week, sunday: day };
     });
 
     return items;
@@ -38,7 +41,7 @@ class WeeksView extends React.Component {
   jsxSundaysDropDown = (weeks) => {
     return <BasicDropdown
       idNameItems={weeks}
-      title="Sunday"
+      title="Week"
       callBack={(item) => {
 
         let ix = item.id - 1;
@@ -47,8 +50,8 @@ class WeeksView extends React.Component {
         this.setState({ selectedWeek: week });
 
         if (week) {
-          let mondayBefore = getDayRelative(week.sunday, -6);
-          this.fillData(mondayBefore, week.sunday);
+          let monday = dayInWeek(week.sunday, 1);
+          this.fillData(monday, week.sunday);
         }
       }}
     />
@@ -73,10 +76,27 @@ class WeeksView extends React.Component {
     </>
   };
 
+  verifyNeededProperties(apiKey, workspaceId, projectId) {
+    return (apiKey && workspaceId && projectId)
+      ? null
+      : "Must provide values for: 1) Api token in '.env' file, 2) Default workspaceId, 3) Default projectId";
+  }
+
   fillData = (from, to) => {
     const keys = config.getTogglKeys();
-    var toggl = new TogglClient({ apiToken: keys.apiKey });
     const dv = config.getLocalStorageDefaultValues();
+
+    let invalid = this.verifyNeededProperties(
+      keys.apiKey,
+      dv.defaultWorkspaceId,
+      dv.defaultProjectId);
+
+    if (invalid) {
+      this.updateStateSummary(invalid, null);
+      return;
+    }
+
+    var toggl = new TogglClient({ apiToken: keys.apiKey });
 
     var opts = {
       since: from,
@@ -86,9 +106,9 @@ class WeeksView extends React.Component {
       project_ids: dv.defaultProjectId,
     };
 
+    this.updateStateSummary(null, null);
+    this.updateStateWeek(null, null);
     const self = this;
-    self.updateStateSummary(null, null);
-    self.updateStateWeek(null, null);
 
     toggl.summaryReport(opts, function (err, data) {
 
@@ -102,9 +122,6 @@ class WeeksView extends React.Component {
 
     //Must send sunday to get data
     toggl.weeklyReport(opts, function (err, data) {
-      console.log("WEEKLY ==== ");
-      console.log(data);
-      console.log(err);
 
       if (err) {
         self.updateStateWeek(err, null);
@@ -113,8 +130,6 @@ class WeeksView extends React.Component {
 
       self.updateStateWeek(null, data);
     });
-
-
   };
 
   updateStateSummary = (err, data) => {
@@ -132,7 +147,7 @@ class WeeksView extends React.Component {
   };
 
   jsxTableHeaderWeekDays = () => {
-    let list = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Total"];
+    let list = getWeekDaysShort();
 
     return <thead><tr>
       {list.map((day) => <th key={day}>{day}</th>)}
@@ -141,11 +156,7 @@ class WeeksView extends React.Component {
 
   jsxWeekTableRows = (records) => {
 
-    console.log("weektablerows");
-    console.log(records);
-    let values=records[0];
-    console.log(values);
-
+    let values = records[0];
     return <tr key="0">
       {values.map((value, ix) => <td key={ix}>{calc.toDurationTime(value, true)}</td>)}
     </tr>
@@ -163,7 +174,7 @@ class WeeksView extends React.Component {
             {this.jsxSundaysDropDown(this.state.weeks)}
             {!this.state.error ? null : <label>Error: {this.state.error}</label>}
             <br />
-            {!this.state.weekTimeData ? null :
+            {!this.state.weekTimeData || !this.state.weekTimeData.week_totals[0] ? null :
               <>
                 <table>
                   {this.jsxTableHeaderWeekDays()}

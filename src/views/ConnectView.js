@@ -36,10 +36,8 @@ class ConnectView extends React.Component {
         const self = this;
 
         toggl.getUserData({}, function (err, userData) {
-            //console.log("USER DATA ====");
 
             if(!userData || err){
-                console.log("Could not connect");
                 self.setConnectionInfo(err,null);
                 return;
             }
@@ -69,8 +67,12 @@ class ConnectView extends React.Component {
     }
 
     hidePartsOfKey(key){
+        if(!key || key.length<1){
+            return ""
+        }
+
         let len=key.length;
-        if(len>1){ len=len/2; }
+        if(len>1){ len=parseInt(len * 1/3); }
 
         return key.substring(0,len) + "**********";
     }
@@ -86,7 +88,10 @@ class ConnectView extends React.Component {
             idNameItems={items} 
             title="Workspace"
             selectedId={this.state.defaultValues.defaultWorkspaceId}
-            callBack={() =>{ console.log("callBack-BasicDropdown");}} 
+            callBack={() =>{ 
+                //TODO future save to local storage.
+                //console.log("callBack-BasicDropdown");
+            }} 
         />
     }
 

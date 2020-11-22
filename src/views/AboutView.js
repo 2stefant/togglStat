@@ -5,7 +5,12 @@ const AboutView = ({title, description}) =>{
    const jsxContent = (title, description) =>{
       return <>
          <label>{title}</label>
+         <br/>
+         <label>Product version: <strong>{process.env.REACT_APP_VERSION}</strong></label>
+         <br/>
          <p>{description}</p>
+         <br/>
+         <label>React version: <strong>{React.version}</strong></label>
       </>;
    }
 

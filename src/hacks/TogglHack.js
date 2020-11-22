@@ -53,7 +53,7 @@ const TogglHack = () => {
 
     var opts = {
       since: "2020-11-01",
-      until: "2020-11-19",
+      until: "2020-11-30",
       user_agent: dv.getUserAgent(),
       workspace_id: dv.defaultWorkspaceId,
       project_ids: dv.defaultProjectId,

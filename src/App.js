@@ -36,9 +36,6 @@ class App extends React.Component {
   }
 
   handleConnectionCallback = (newStatus) => {
-    console.log("=== handleConnectionCallback");
-    console.log(newStatus);
-    
     this.setState({
       connection: {
         status: newStatus,

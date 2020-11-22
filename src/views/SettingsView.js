@@ -90,12 +90,6 @@ class SettingsView extends React.Component {
             value={defaultValues.defaultProjectId}
             handleChange={this.handleChange}
           />
-          <br/>
-          <InputField id="defaultEmail"
-            title="Default Email"
-            value={defaultValues.defaultEmail}
-            handleChange={this.handleChange}
-          />
           {config.getTogglKeys().showDebugOption ? 
             <><br/>
             <label>
