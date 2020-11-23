@@ -28,6 +28,7 @@ export const BasicDropdown = ({ idNameItems, title, selectedId, callBack }) => {
     <div>
       <p>Selected {title}: {item.name} ({item.id})</p>
       <select 
+        class="form-control"
         onChange={(event) => {
           let id=event.target.value;
           event.preventDefault();

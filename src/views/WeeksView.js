@@ -1,4 +1,6 @@
 import React from "react";
+import Table from 'react-bootstrap/Table';
+import Alert from 'react-bootstrap/Alert';
 
 import BasicDropdown from "../components/BasicDropdown";
 import DebugPanel from "../components/DebugPanel";
@@ -183,14 +185,16 @@ class WeeksView extends React.Component {
         {!this.context.status.isConnected ? null :
           <>
             {this.jsxSundaysDropDown(this.state.weeks)}
-            {!this.state.error ? null : <label>Error: {this.state.error}</label>}
+            {!this.state.error ? null : 
+              <Alert key="danger" variant="danger">Error: {this.state.error}</Alert>
+            }
             <br />
             {!this.state.weekTimeData || !this.state.weekTimeData.week_totals[0] ? null :
               <>
-                <table>
+                <Table striped bordered hover>
                   {this.jsxTableHeaderWeekDays()}
                   <tbody>{this.jsxWeekTableRows([this.state.weekTimeData.week_totals])}</tbody>
-                </table>
+                </Table>
               </>
             }
             <br />
@@ -204,16 +208,16 @@ class WeeksView extends React.Component {
                 <label>time: {calc.toDurationTime(wd.data[0].time)}</label>
                 <br />
                 <br />
-                <table>
+                <Table striped bordered hover variant="dark">
                   <thead>
                     <tr>
-                      <th key="id">Id</th>
+                      <th key="id">#</th>
                       <th key="title">Title</th>
                       <th key="time">Time</th>
                     </tr>
                   </thead>
                   <tbody>{this.jsxSummaryTableRows(wd.data[0].items)}</tbody>
-                </table>
+                </Table>
                 {!config.getLocalStorageDefaultValues().debugMode ? null
                   : <>
                     <DebugPanel></DebugPanel>

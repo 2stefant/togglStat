@@ -68,33 +68,59 @@ class SettingsView extends React.Component {
         <h2>Settings</h2>
 
         <form onSubmit={this.handleSubmit}>
-          <InputField id="defaultWorkspaceId"
-            title="Default Workspace Id"
-            value={defaultValues.defaultWorkspaceId}
-            handleChange={this.handleChange}
-          />
 
-          <InputField id="defaultProjectId"
-            title="Default Project Id"
-            value={defaultValues.defaultProjectId}
-            handleChange={this.handleChange}
-          />
-          {config.getTogglKeys().showDebugOption ? 
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Default Workspace Id</span>
+            </div>
+            <input id="defaultWorkspaceId" 
+              name="defaultWorkspaceId" 
+              defaultValue={defaultValues.defaultWorkspaceId}
+              type="text" 
+              class="form-control" 
+              onChange={this.handleChange}
+              placeholder="Copy id from dropdown in the Connect View" 
+              aria-label="Default Workspace Id" 
+              aria-describedby="basic-addon1" />
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Default Project Id</span>
+            </div>
+            <input id="defaultProjectId" 
+              name="defaultProjectId" 
+              defaultValue={defaultValues.defaultProjectId}
+              type="text" 
+              class="form-control" 
+              onChange={this.handleChange}
+              placeholder="Copy id from one of the projects in the Home View" 
+              aria-label="Default Project Id" 
+              aria-describedby="basic-addon1" />
+          </div>
+        
+          {!config.getTogglKeys().showDebugOption ? null:
             <><br/>
             <label>
-              <input type="checkbox" 
-                id="debugMode"
-                name="debugMode"
-                onChange={this.handleChange}
-                checked={(defaultValues.debugMode) ? true: false }
-              /> <span>Debug Mode</span>
+              <div className="input-group-prepend">
+                <div className="input-group-text">
+                <input type="checkbox" 
+                  id="debugMode"
+                  name="debugMode"
+                  onChange={this.handleChange}
+                  checked={(defaultValues.debugMode) ? true: false }
+                />
+                Debug Mode
+                </div>
+                
+              </div>
             </label>
-            </>: null
+            </>
           }
           <br/>
           <br/>
           <label>
-            <input type="submit" value="Save" 
+            <input type="submit" className="btn btn-outline-primary" value="Save" 
             /> <span id="saveResultLabel"></span>
           </label>
         </form>

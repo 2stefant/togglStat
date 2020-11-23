@@ -9,7 +9,7 @@ function ListComponent(props) {
 
     const title=(!props.hideTitle || props.hideTitle===false) 
         ? <h2>{props.title}</h2>
-        : <></>;
+        : null;
 
     return (
         <div className="ListComponent">

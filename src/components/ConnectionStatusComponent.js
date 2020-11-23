@@ -6,11 +6,10 @@ class ConnectionStatusComponent extends React.Component {
   render() {
     let status = this.context.status;
     
+    const text=status.isConnected ? "Connected": "Disconnected";
+    const coloring=`badge badge-${status.isConnected ? "success": "warning"}`;
     return (
-      <label style={{backgroundColor: status.background}}>
-          {status.isConnected ? "Connected": "Not connected"}
-          <br/>
-      </label>
+      <span class={coloring}>{text}</span>
     );
   }
 }

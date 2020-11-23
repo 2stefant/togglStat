@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
-import Calendar from "react-calendar";
+import Table from 'react-bootstrap/Table';
+import Alert from 'react-bootstrap/Alert';
 
 import BasicDropdown from "../components/BasicDropdown";
 import DebugPanel from "../components/DebugPanel";
@@ -149,7 +150,9 @@ const MonthsView = () => {
         (!ctx.status.isConnected) ? null
           : <>
             {jsxMonthsDropDown(months)}
-            {!error ? null : <label>Error: {error}</label>}
+            {!error ? null : 
+              <Alert key="danger" variant="danger">Error: {error}</Alert>
+            }
             <br />
             {!weekData || !weekData.data[0]
               ? !selectedMonth ? null : <label>No time reported</label> :
@@ -161,16 +164,16 @@ const MonthsView = () => {
                 <label>time: {calc.toDurationTime(weekData.data[0].time)}</label>
                 <br />
                 <br />
-                <table>
+                <Table striped bordered hover variant="dark">
                   <thead>
                     <tr>
-                      <th key="id">Id</th>
+                      <th key="id">#</th>
                       <th key="title">Title</th>
                       <th key="time">Time</th>
                     </tr>
                   </thead>
                   <tbody>{jsxSummaryTableRows(weekData.data[0].items)}</tbody>
-                </table>
+                </Table>
                 {!config.getLocalStorageDefaultValues().debugMode ? null
                   : <>
                     <DebugPanel></DebugPanel>
@@ -181,12 +184,6 @@ const MonthsView = () => {
             }
           </>
       }
-      {/* <Calendar
-        onChange={onChange}
-        defaultValue={new Date()}
-        showWeekNumbers={true}
-        value={value}
-      /> */}
     </div>
   );
 };

@@ -8,13 +8,13 @@ const AboutView = ({title, description}) =>{
 
    const jsxContent = (title, description) =>{
       return <>
-         <label>{title}</label>
-         <br/>
-         <label>Product version: <strong>{process.env.REACT_APP_VERSION}</strong></label>
-         <br/>
-         <p>{description}</p>
-         <br/>
-         <label>React version: <strong>{React.version}</strong></label>
+         <div className="card" >
+            <div className="card-body">
+               <h5 className="card-title">{title} {process.env.REACT_APP_VERSION}</h5>
+               <p class="card-text">{description}</p>
+               <p class="card-text">React version: {React.version}</p>
+            </div>
+         </div>
       </>;
    }
 

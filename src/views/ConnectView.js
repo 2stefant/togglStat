@@ -1,9 +1,13 @@
 import React from 'react';
+import Alert from 'react-bootstrap/Alert';
+
 import {ConnectionStatusContext, connectionStatus } from '../services/ConnectionStatusContext';
 import ConfigService from "../services/ConfigService";
 import BasicDropdown from '../components/BasicDropdown';
 const config=ConfigService.getSingleton();
 const TogglClient = require("toggl-api");
+
+
 
 /**
  * Demonstrates the following React concepts:
@@ -110,19 +114,19 @@ class ConnectView extends React.Component {
                 <div><label>
                     ApiKey: {this.hidePartsOfKey(key)}
                 </label></div>
-                <input disabled={isConnected} type="submit" value="Connect" />
+                <input type="submit" className="btn btn-outline-primary" disabled={isConnected}  value="Connect" />
                 &ensp;&ensp;
-                <button name="disconnect" 
+                <button name="disconnect"  className="btn btn-outline-secondary"
                     disabled={!isConnected} 
                     onClick={this.handleDisconnect}
                 >Disconnect</button>
+                <br/>
+                <br/>
                  {!ud ? null: 
-                <>
-                    &ensp;&ensp;
-                    <label>{ud.email}</label>
-                    &ensp;&ensp;
-                    <label>{ud.fullname}</label>
-                </>
+                <Alert key="success" variant="success">
+                    Welcome {ud.fullname}, {ud.email}
+                </Alert>
+                
             }
             </form>
             <br/>

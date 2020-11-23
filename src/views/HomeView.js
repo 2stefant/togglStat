@@ -1,4 +1,5 @@
 import React from "react";
+import Alert from 'react-bootstrap/Alert';
 
 import { ConnectionStatusContext } from "../services/ConnectionStatusContext";
 import ConfigService from "../services/ConfigService";
@@ -104,13 +105,20 @@ class HomeView extends React.Component {
         <br />
         {this.context.status.isConnected ? <TimePeriodStatisticsComponent /> : null}
         <br />
-        {!this.state.error ? null : <label>Error: {JSON.stringify(this.state.error)}</label>}
+        {!this.state.error ? null : 
+              <Alert key="danger" variant="danger">Error: {JSON.stringify(this.state.error)}</Alert>
+        }
         <br />
         {!this.context.status.isConnected ? null
           : <>
             {!this.state.projects ? <label>No projects</label> :
               <>
-                <ListComponent title={"Projects"}
+                <nav aria-label="breadcrumb">
+                  <ol className="breadcrumb">
+                    <li className="breadcrumb-item active" aria-current="page">Projects</li>
+                  </ol>
+                </nav>
+                <ListComponent 
                   items={this.state.projects.map(_ => {
                     return { id: _.id, name: `projectId=${_.id}, ${_.name}, actualHours=${_.actual_hours}` };
                   })} />

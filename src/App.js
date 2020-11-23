@@ -1,4 +1,8 @@
 import React from "react";
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import ConnectionStatusComponent from './components/ConnectionStatusComponent';
+
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import {ConnectionStatusContext, connectionStatus} from './services/ConnectionStatusContext';
@@ -73,19 +77,23 @@ class App extends React.Component {
       <>
         <ConnectionStatusContext.Provider value={this.state.connection}>
           <Router>
-              <HeaderComponent />
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <br/> 
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+              <span className="navbar-brand"><strong>togglStat</strong></span>
               <ul className="navbar-nav mr-auto">
-                <li><Link to={"/"} className="nav-link">Home</Link></li>
+                <li><Link to={"/"} className="nav-link active">Home</Link></li>
                 <li><Link to={"/connect"} className="nav-link">Connect</Link></li>
                 <li><Link to={"/weeks"} className="nav-link">Weeks</Link></li>
                 <li><Link to={"/months"} className="nav-link">Months</Link></li>
-                <li><Link to={"/settings"} className="nav-link">Settings</Link></li>
+              </ul>
+              <ul className="navbar-nav">
+                <li className="navbar-text"><ConnectionStatusComponent/></li>
+                <li><Link to={"/settings"} className="nav-link ">Settings</Link></li>
                 <li><Link to={"/about"} className="nav-link">About</Link></li>
                 <li><Link to={"/debug"} className="nav-link">Debug</Link></li>
               </ul>
             </nav>
-            <hr />
+            <br/>
             <Switch>
               <Route exact path="/" component={HomeView} />
               <Route path="/connect" render={

@@ -52,7 +52,7 @@ const DebugView = ({ title, description }) => {
       <h2>{title}</h2>
       <p>{description}</p>
       <br />
-      <button name="axios" onClick={axiosCallDemonstration}>Axios Demonstration</button>
+      <button name="axios" className="btn btn-outline-info" onClick={axiosCallDemonstration}>Axios Demonstration</button>
       <br />
       {!axiosData ? null: <label>Axios call result: {axiosData}</label>}
       <br />
