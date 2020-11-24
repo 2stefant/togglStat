@@ -9,6 +9,9 @@
 - Uses the [DurationCalculator](./src/services/DurationCalculator.js) for conversion from milliseconds to other time formats. 
 - Uses the [ConfigService](./src/services/ConfigService.js) for encapsulation of '.env' features and localstorage.
 
+<video width="320" height="240" controls>
+  <source src="./shots/togglStat.mp4" type="video/mp4">
+</video>
   
 ## Background
 - This project was created to learn React, Github, Curl, Typescript etc.
