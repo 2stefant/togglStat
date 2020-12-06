@@ -16,6 +16,27 @@
 - This project was created to learn React, Github, Curl, Typescript etc.
 - This project was initially the [assignment](./assignment/ReactKurs_Projektbeskrivning_2020HT_StefanLindepil.pdf) for a React development course at [Chas Academy](https://chasacademy.se) in Sweden.
 
+### Source code folder structure
+- src
+  - components 
+    - Reusable headers, input fields, lists, dropdowns etc.
+  - hacks 
+    - Exploratory parts, curl + toggl api.
+  - services 
+    - Context for Toggl connection, encapsulation of local storage
+    and dotenv files ('.env') 
+  - views
+    - The different views of the application.
+
+### Future features
+- Layout 
+  - Styling
+  - Pictures
+  - Logo and icons
+
+- Pdf generation for weekly/monthly reported time.
+
+- Charting, e.g. https://www.developerdrive.com/how-to-chart-your-hours-with-apis-javascript-and-svg/
 
 ## Technologies
 This application is written with:
@@ -31,7 +52,7 @@ Some details are summarized in [./src/hacks/TogglApi.md](./src/hacks/TogglApi.md
 ### Learn how to create a custom npm package
 Some details are summarized in [./src/hacks/NpmQuickstart.md](./src/hacks/NpmQuickstart.md)
 
-## Preconditions before using the application
+## Preconditions - Before using the application
 1. Clone the '.env.example' file and rename to '.env', located in the root folder.
 2. Create a free account at Toggl.com
    - Create a workspace
@@ -45,17 +66,6 @@ Some details are summarized in [./src/hacks/NpmQuickstart.md](./src/hacks/NpmQui
    ```  
    REACT_APP_SHOW_DEBUG_OPTION="" 
    ```
-### Source code folder structure
-- src
-  - components 
-    - Reusable headers, input fields, lists, dropdowns etc.
-  - hacks 
-    - Exploratory parts, curl + toggl api.
-  - services 
-    - Context for Toggl connection, encapsulation of local storage
-    and dotenv files ('.env') 
-  - views
-    - The different views of the application.
 
 ## Configure environment
   
@@ -74,7 +84,7 @@ This will run the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) 
 to view it in the browser.
 
-## How to use the application - Workflow
+## Workflow - How to use the application
 Note: Example screenshots are available [here](./shots/ScreenShots.md)
 1. Visit the Connect view.
    - Click Connect
@@ -110,7 +120,7 @@ You will also see any lint errors in the console.
 ### Update referenced npm packages to newer versions.
 ### `npm update`
 
-## Build for production
+### Build for production
 
 ### `npm run build`
 
@@ -122,20 +132,6 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### Future features
-- Layout 
-  - Styling
-  - Pictures
-  - Logo and icons
-
-- Pdf generation for weekly/monthly reported time.
-
-- Charting, e.g. https://www.developerdrive.com/how-to-chart-your-hours-with-apis-javascript-and-svg/
-
-- Improved documentation
-  - Short video how to use the app
-
 ### Deployment
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
