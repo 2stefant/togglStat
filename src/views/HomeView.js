@@ -7,7 +7,7 @@ import ConfigService from "../services/ConfigService";
 import ListComponent from "../components/ListComponent";
 import DebugPanel from '../components/DebugPanel';
 import TimePeriodStatisticsComponent from "../components/TimePeriodStatisticsComponent";
-const { dayCurrentMetrics } = require("@2stefant.org/alldays");
+const { calendarMetrics } = require("@2stefant.org/alldays");
 
 const config = ConfigService.getSingleton();
 const TogglClient = require("toggl-api");
@@ -28,7 +28,7 @@ class HomeView extends React.Component {
     super(props);
 
     this.state = {
-      currentMetrics: dayCurrentMetrics(),
+      metrics: calendarMetrics(),
       error: null,
       projects: null,
       defaultValues: config.getLocalStorageDefaultValues()
@@ -41,11 +41,11 @@ class HomeView extends React.Component {
 
   switchPeriod(period) {
     switch (period) {
-      case "day": return this.state.currentMetrics.currentDay;
-      case "week": return this.state.currentMetrics.currentWeek;
-      case "month": return this.state.currentMetrics.currentMonth;
-      case "quarter": return this.state.currentMetrics.currentQuarter;
-      case "year": return this.state.currentMetrics.currentYear;
+      case "day": return this.state.metrics.day;
+      case "week": return this.state.metrics.week;
+      case "month": return this.state.metrics.month;
+      case "quarter": return this.state.metrics.quarter;
+      case "year": return this.state.metrics.year;
       default: throw Error("Invalid case in switchPeriod.");
     }
   }
@@ -92,16 +92,22 @@ class HomeView extends React.Component {
     });
   }
 
+  jsxHeaderStats= ()=>{
+        return <label>
+          Current Day: {this.switchPeriod("day")}
+          , Week: {this.switchPeriod("week")}
+          , Month: {this.switchPeriod("month")}
+          , Quarter: {this.switchPeriod("quarter")}
+          , Year: {this.switchPeriod("year")}
+        </label>
+  }
+
   render() {
     return (
       <div>
         <h2>Home</h2>
         <br />
-        <label>Current Day: {this.switchPeriod("day")}</label>
-        <label>, Week: {this.switchPeriod("week")}</label>
-        <label>, Month: {this.switchPeriod("month")}</label>
-        <label>, Quarter: {this.switchPeriod("quarter")}</label>
-        <label>, Year: {this.switchPeriod("year")}</label>
+        {this.jsxHeaderStats()}
         <br />
         {this.context.status.isConnected ? <TimePeriodStatisticsComponent /> : null}
         <br />

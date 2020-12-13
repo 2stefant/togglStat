@@ -9,7 +9,7 @@ import { ConnectionStatusContext } from "../services/ConnectionStatusContext";
 import DurationCalculator from "../services/DurationCalculator";
 import ConfigService from "../services/ConfigService";
 
-const { getMonthsShort, dayCurrentMetrics, dayMetrics } = require("@2stefant.org/alldays");
+const { monthsShort, calendarMetrics, calendarBoundary } = require("@2stefant.org/alldays");
 var TogglClient = require("toggl-api");
 const config = ConfigService.getSingleton();
 const calc = DurationCalculator.getSingleton();
@@ -29,14 +29,15 @@ const calc = DurationCalculator.getSingleton();
 const MonthsView = () => {
   
   const getIdNameMonths = () => {
-    const months = getMonthsShort();
-    const currentYear = dayCurrentMetrics().currentYear;
+    const months = monthsShort();
+    const currentYear = calendarMetrics().year;
 
     let items = months.map((month, ix) => {
 
       let num = ix + 1;
       let firstDayInMonth = `${currentYear}-${num}-01`;
-      let metrics = dayMetrics(firstDayInMonth);
+      let startDay = calendarBoundary(firstDayInMonth, true, "month");
+      let endDay = calendarBoundary(firstDayInMonth, false, "month");
 
       let zero = num < 10 ? "0" : "";
       let name = `${zero}${num} - ${month}`;
@@ -44,7 +45,7 @@ const MonthsView = () => {
       return {
         id: num,
         name: name,
-        start: metrics.monthStartDay, end: metrics.monthEndDay
+        start: startDay, end: endDay
       };
     });
     return items;

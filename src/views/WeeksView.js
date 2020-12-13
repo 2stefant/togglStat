@@ -9,7 +9,7 @@ import { ConnectionStatusContext } from "../services/ConnectionStatusContext";
 import DurationCalculator from "../services/DurationCalculator";
 import ConfigService from "../services/ConfigService";
 
-const { alldays, dayInWeek, getWeekDaysShort } = require("@2stefant.org/alldays");
+const { alldays, dayInWeek, weekDaysShort } = require("@2stefant.org/alldays");
 var TogglClient = require("toggl-api");
 const config = ConfigService.getSingleton();
 const calc = DurationCalculator.getSingleton();
@@ -160,7 +160,7 @@ class WeeksView extends React.Component {
   };
 
   jsxTableHeaderWeekDays = () => {
-    let list = getWeekDaysShort();
+    let list = [...weekDaysShort(), "Total"];
 
     return <thead><tr>
       {list.map((day) => <th key={day}>{day}</th>)}
