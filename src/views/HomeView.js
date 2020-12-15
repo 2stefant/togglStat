@@ -7,8 +7,10 @@ import ConfigService from "../services/ConfigService";
 import ListComponent from "../components/ListComponent";
 import DebugPanel from '../components/DebugPanel';
 import TimePeriodStatisticsComponent from "../components/TimePeriodStatisticsComponent";
-const { calendarMetrics } = require("@2stefant.org/alldays");
+import DurationCalculator from "../services/DurationCalculator";
 
+const { calendarMetrics } = require("@2stefant.org/alldays");
+const calc = DurationCalculator.getSingleton();
 const config = ConfigService.getSingleton();
 const TogglClient = require("toggl-api");
 
@@ -28,27 +30,158 @@ class HomeView extends React.Component {
     super(props);
 
     this.state = {
-      metrics: calendarMetrics(),
       error: null,
       projects: null,
-      defaultValues: config.getLocalStorageDefaultValues()
+      defaultValues: config.getLocalStorageDefaultValues(),
+      statistics: this.buildEmptyStats(),
+      statsReady: false
     };
   }
 
   componentDidMount() {
-    this.tryShowProjects();
+
+    if(!this.context.status.isConnected){
+      return;
+    }
+
+    const apiKey = config.getTogglKeys().apiKey;
+    const dv=this.state.defaultValues;
+
+    let invalid = this.verifyNeededProperties(apiKey, dv.defaultWorkspaceId);
+
+    if (invalid) {
+      this.updateProjects(invalid, null);
+      return;
+    } else {
+      this.updateProjects(null, null);
+    }
+
+    var toggl = new TogglClient({ apiToken: apiKey });
+
+    this.fillData(toggl, dv.defaultWorkspaceId);
+    this.fillStatistics(
+      toggl, 
+      dv.defaultWorkspaceId, 
+      this.state.defaultValues.defaultProjectId, 
+      dv.getUserAgent());
   }
 
-  switchPeriod(period) {
-    switch (period) {
-      case "day": return this.state.metrics.day;
-      case "week": return this.state.metrics.week;
-      case "month": return this.state.metrics.month;
-      case "quarter": return this.state.metrics.quarter;
-      case "year": return this.state.metrics.year;
-      default: throw Error("Invalid case in switchPeriod.");
-    }
+  buildEmptyStats(err=null){
+    return {
+      week: "",
+      month: "",
+      quarter: "",
+      midYear: "",
+      year:"",
+      error: err
+    };
   }
+
+  fillStatistics = (toggl, workspaceId, projectId, userAgent) => {
+
+    var metrics=calendarMetrics();
+
+    var opts = {
+      since: null,
+      until: null,
+      user_agent: userAgent,
+      workspace_id: workspaceId,
+      project_ids: projectId,
+    };
+
+    const stats=this.buildEmptyStats();
+    this.setState({statistics: stats});
+    const self=this;
+
+    /* WEEK */
+    opts.since=metrics.weekStartDay;
+    opts.until=metrics.weekEndDay;
+    toggl.summaryReport(opts, function (err, data) {
+
+      if (err) {
+        stats.err=err;
+        this.setState({statistics: stats});
+        return;
+      }
+
+      if(data){
+        stats.week=calc.toDurationTime(data.total_grand);
+        self.setState({statistics: stats});
+      }
+    });
+
+    /* MONTH */
+    opts.since=metrics.monthStartDay;
+    opts.until=metrics.monthEndDay;
+    toggl.summaryReport(opts, function (err, data) {
+
+      if (err) {
+        stats.err=err;
+        this.setState({statistics: stats});
+        return;
+      }
+
+      if(data){
+        stats.month=calc.toDurationTime(data.total_grand);
+        self.setState({statistics: stats});
+      }
+    });
+    
+    /* QUARTER */
+    opts.since=metrics.quarterStartDay;
+    opts.until=metrics.quarterEndDay;
+    toggl.summaryReport(opts, function (err, data) {
+
+      if (err) {
+        stats.err=err;
+        this.setState({statistics: stats});
+        return;
+      }
+
+      if(data){
+        stats.quarter=calc.toDurationTime(data.total_grand);
+        self.setState({statistics: stats});
+      }
+    });
+
+      /* MIDYEAR */
+      opts.since=metrics.yearStartDay;
+      opts.until="2020-07-01";
+      console.log(opts);
+      toggl.summaryReport(opts, function (err, data) {
+  
+        if (err) {
+          stats.err=err;
+          this.setState({statistics: stats});
+          return;
+        }
+  
+        if(data){
+          stats.midYear=calc.toDurationTime(data.total_grand);
+          self.setState({statistics: stats});
+        }
+      });
+
+    /* YEAR */
+    opts.since=metrics.yearStartDay;
+    opts.until=metrics.yearEndDay;
+
+    toggl.summaryReport(opts, function (err, data) {
+
+      if (err) {
+        stats.err=err;
+        this.setState({statistics: stats});
+        return;
+      }
+
+      if(data){
+        stats.year=calc.toDurationTime(data.total_grand);
+        self.setState({statistics: stats});
+        self.setState({statsReady: true});
+      }
+    });
+
+  };
 
   verifyNeededProperties = (apiKey, workspaceId) => {
     return (apiKey && workspaceId)
@@ -56,50 +189,22 @@ class HomeView extends React.Component {
       : "Must 1) Define Api-token in '.env' file, 2. Perform Connect, 3) Copy and set default workspaceId.";
   }
 
-  tryShowProjects = () => {
-    const apiKey = config.getTogglKeys().apiKey;
-    const wid = this.state.defaultValues.defaultWorkspaceId;
-
-    let invalid = this.verifyNeededProperties(apiKey, wid);
-
-    if (invalid) {
-      this.updateState(invalid, null);
-      return;
-    } else {
-      this.updateState(null, null);
-    }
-
-    var toggl = new TogglClient({ apiToken: apiKey });
-
+  fillData = (toggl, workspaceId) => {
     const self = this;
-
-    toggl.getWorkspaceProjects(wid, {}, function (err, projects) {
-
+    toggl.getWorkspaceProjects(workspaceId, {}, function (err, projects) {
       if (!projects || err) {
-        self.updateState(err, null);
+        self.updateProjects(err, null);
         return;
       }
-
-      self.updateState(null, projects);
-
+      self.updateProjects(null, projects);
     });
   }
 
-  updateState = (err, data) => {
+  updateProjects = (err, data) => {
     this.setState({
       error: err,
       projects: data
     });
-  }
-
-  jsxHeaderStats= ()=>{
-        return <label>
-          Current Day: {this.switchPeriod("day")}
-          , Week: {this.switchPeriod("week")}
-          , Month: {this.switchPeriod("month")}
-          , Quarter: {this.switchPeriod("quarter")}
-          , Year: {this.switchPeriod("year")}
-        </label>
   }
 
   render() {
@@ -107,9 +212,9 @@ class HomeView extends React.Component {
       <div>
         <h2>Home</h2>
         <br />
-        {this.jsxHeaderStats()}
-        <br />
-        {this.context.status.isConnected ? <TimePeriodStatisticsComponent /> : null}
+        {!this.state.statsReady ? null : 
+          <TimePeriodStatisticsComponent statistics={this.state.statistics}/>      
+        }
         <br />
         {!this.state.error ? null : 
               <Alert key="danger" variant="danger">Error: {JSON.stringify(this.state.error)}</Alert>
