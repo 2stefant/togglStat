@@ -9,10 +9,9 @@ import DebugPanel from './components/DebugPanel';
 import ErrorBoundary from "./components/ErrorBoundary";
 
 import HomeView from "./views/HomeView";
-import ConnectView from "./views/ConnectView";
+import ConnectOverview from "./views/ConnectOverview";
 import WeeksView from "./views/WeeksView";
 import MonthsView from "./views/MonthsView";
-import SettingsView from "./views/SettingsView";
 import AboutView from "./views/AboutView";
 import DebugView from "./views/DebugView";
 
@@ -78,13 +77,12 @@ class App extends React.Component {
               <span className="navbar-brand"><strong>togglStat</strong></span>
               <ul className="navbar-nav mr-auto">
                 <li><Link to={"/"} className="nav-link active">Home</Link></li>
-                <li><Link to={"/connect"} className="nav-link">Connect</Link></li>
                 <li><Link to={"/weeks"} className="nav-link">Weeks</Link></li>
                 <li><Link to={"/months"} className="nav-link">Months</Link></li>
               </ul>
               <ul className="navbar-nav">
                 <li className="navbar-text"><ConnectionStatusComponent/></li>
-                <li><Link to={"/settings"} className="nav-link ">Settings</Link></li>
+                <li><Link to={"/connect"} className="nav-link">Connect</Link></li>
                 <li><Link to={"/about"} className="nav-link">About</Link></li>
                 {this.isDebugMode() 
                   ? <li><Link to={"/debug"} className="nav-link">Debug</Link></li>
@@ -95,12 +93,11 @@ class App extends React.Component {
             <br/>
             <Switch>
               <Route exact path="/" component={HomeView} />
-              <Route path="/connect" render={
-                props => (<ConnectView config={config.getTogglKeys()} />)
-              } />
               <Route path="/weeks" component={WeeksView} />
               <Route path="/months" component={MonthsView}/>
-              <Route path="/settings" component={SettingsView} />
+              <Route path="/connect" render={
+                props => (<ConnectOverview togglKeys={config.getTogglKeys()} />)
+              } />
               <Route path="/about" render={
                 props => <AboutView title="togglStat" 
                 description="Statistics for reported time in Toggl." />
