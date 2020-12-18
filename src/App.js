@@ -1,14 +1,10 @@
 import React from "react";
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import ConnectionStatusComponent from './components/ConnectionStatusComponent';
-
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import {ConnectionStatusContext, connectionStatus} from './services/ConnectionStatusContext';
 import ConfigService from "./services/ConfigService";
 
-import HeaderComponent from "./components/HeaderComponent";
+import ConnectionStatusComponent from './components/ConnectionStatusComponent';
 import DebugPanel from './components/DebugPanel';
 import ErrorBoundary from "./components/ErrorBoundary";
 
@@ -90,7 +86,10 @@ class App extends React.Component {
                 <li className="navbar-text"><ConnectionStatusComponent/></li>
                 <li><Link to={"/settings"} className="nav-link ">Settings</Link></li>
                 <li><Link to={"/about"} className="nav-link">About</Link></li>
-                <li><Link to={"/debug"} className="nav-link">Debug</Link></li>
+                {this.isDebugMode() 
+                  ? <li><Link to={"/debug"} className="nav-link">Debug</Link></li>
+                  : null
+                }
               </ul>
             </nav>
             <br/>
@@ -106,10 +105,13 @@ class App extends React.Component {
                 props => <AboutView title="togglStat" 
                 description="Statistics for reported time in Toggl." />
               }/>
-              <Route path="/debug" render={
-                props => <DebugView title="Debug" 
-                description="Debug features not to be used in production." />
-            }/>
+              {this.isDebugMode() 
+                ? <Route path="/debug" render={
+                    props => <DebugView title="Debug" 
+                      description="Debug features not to be used in production." />
+                  }/>
+                : null
+              }
               </Switch>
           </Router>
       </ConnectionStatusContext.Provider>
