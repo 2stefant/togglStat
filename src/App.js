@@ -73,22 +73,28 @@ class App extends React.Component {
         <ConnectionStatusContext.Provider value={this.state.connection}>
           <Router>
             <br/> 
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
               <span className="navbar-brand"><strong>togglStat</strong></span>
-              <ul className="navbar-nav mr-auto">
-                <li><Link to={"/"} className="nav-link active">Home</Link></li>
-                <li><Link to={"/weeks"} className="nav-link">Weeks</Link></li>
-                <li><Link to={"/months"} className="nav-link">Months</Link></li>
-              </ul>
-              <ul className="navbar-nav">
-                <li className="navbar-text"><ConnectionStatusComponent/></li>
-                <li><Link to={"/connect"} className="nav-link">Connect</Link></li>
-                <li><Link to={"/about"} className="nav-link">About</Link></li>
-                {this.isDebugMode() 
-                  ? <li><Link to={"/debug"} className="nav-link">Debug</Link></li>
-                  : null
-                }
-              </ul>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+
+              <div class="collapse navbar-collapse" id="navbarsExample10">
+                <ul className="navbar-nav me-auto mb-2 mb-md-0">
+                  <li><Link to={"/"} className="nav-link active">Home</Link></li>
+                  <li><Link to={"/weeks"} className="nav-link">Weeks</Link></li>
+                  <li><Link to={"/months"} className="nav-link">Months</Link></li>
+                </ul>
+                <ul className="navbar-nav">
+                  <li className="navbar-text"><ConnectionStatusComponent/></li>
+                  <li><Link to={"/connect"} className="nav-link">Connect</Link></li>
+                  <li><Link to={"/about"} className="nav-link">About</Link></li>
+                  {this.isDebugMode() 
+                    ? <li><Link to={"/debug"} className="nav-link">Debug</Link></li>
+                    : null
+                  }
+                </ul>
+              </div>
             </nav>
             <br/>
             <Switch>
