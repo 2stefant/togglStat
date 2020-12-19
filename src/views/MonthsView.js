@@ -146,7 +146,9 @@ const MonthsView = () => {
 
   return (
     <div className="MonthsView">
-      <h2>Months</h2>
+      <h2>Months
+        <img src="/assets/calendar3.svg" alt="" width="32" height="32" title="month"></img>
+      </h2>
       {
         (!ctx.status.isConnected) ? null
           : <>

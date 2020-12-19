@@ -181,7 +181,9 @@ class WeeksView extends React.Component {
 
     return (
       <div className="WeeksView">
-        <h2>Weeks</h2>
+        <h2>Weeks
+          <img src="/assets/calendar-week.svg" alt="" width="32" height="32" title="week"></img>
+        </h2>
         {!this.context.status.isConnected ? null :
           <>
             {this.jsxSundaysDropDown(this.state.weeks)}
